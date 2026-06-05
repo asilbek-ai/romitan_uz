@@ -1,0 +1,299 @@
+{
+  "news": [
+    {
+      "title": "qwjhhrefuqwrwq",
+      "summary": "qjwhvrhgwrw",
+      "content": "q",
+      "imageUrl": "whegqwurwqr",
+      "tags": "qwrgqwur",
+      "id": 1779254635807,
+      "_id": "1779254635807",
+      "createdAt": "2026-05-20T05:23:55.807Z"
+    },
+    {
+      "title": "wrhjjwyrvewr",
+      "summary": "qhwerguqwvrwqr",
+      "content": "asdasyfvusfa",
+      "imageUrl": "https://c8.alamy.com/comp/3CAWYF0/bukhara-uzbekistan-may-29-2025-bronze-monument-to-nasreddin-khoja-in-the-central-city-square-of-bukhara-beside-the-lyabi-hauz-complex-3CAWYF0.jpg",
+      "tags": "qwejfqwytrwqr",
+      "id": 1779254621924,
+      "_id": "1779254621924",
+      "createdAt": "2026-05-20T05:23:41.924Z"
+    },
+    {
+      "id": 1,
+      "_id": "1",
+      "title": "Jondor tumanida yangi maktab qurilishi boshlandi",
+      "summary": "Zamonaviy 500 o'rinli maktab qurilishi boshlandi.",
+      "content": "Bugun Jondor tumanida yangi maktab qurilishining poydevori qo'yildi. Qurilish 2025-yil sentyabrda yakunlanadi.",
+      "imageUrl": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800",
+      "tags": [
+        "ta'lim"
+      ],
+      "date": "2026-05-19T11:39:35.052Z",
+      "author": "Jondor Tumani Axborot Xizmati"
+    },
+    {
+      "id": 2,
+      "_id": "2",
+      "title": "Qishloq xo'jaligi mahsulotlari eksporti 25% ga oshdi",
+      "summary": "Tumanda yetishtirilgan mahsulotlar eksporti oshdi.",
+      "content": "Joriy yilda eksport sezilarli darajada oshdi. Bu fermer xo'jaliklarining samarali faoliyatidan dalolat beradi.",
+      "imageUrl": "https://images.unsplash.com/photo-1530836369250-ef72a3f5c9a8?w=800",
+      "tags": [
+        "qishloq xo'jaligi"
+      ],
+      "date": "2026-05-19T11:39:35.054Z",
+      "author": "Jondor Tumani Axborot Xizmati"
+    },
+    {
+      "id": 3,
+      "_id": "3",
+      "title": "Yangi park va istirohat bog'i ochildi",
+      "summary": "Tuman markazida zamonaviy park ochildi.",
+      "content": "Yangi parkda bolalar maydonchalari va sport zonalari tashkil etilgan. Parkda 500 dan ortiq daraxt ko'chatlari ekilgan.",
+      "imageUrl": "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=800",
+      "tags": [
+        "infratuzilma"
+      ],
+      "date": "2026-05-19T11:39:35.054Z",
+      "author": "Jondor Tumani Axborot Xizmati"
+    }
+  ],
+  "services": [
+    {
+      "name": "hjagfuysafs",
+      "category": "fmhvasjvffsahf",
+      "description": "asfnmbjsafs",
+      "department": "ashgfjyasvgyfusaf",
+      "link": "as,fasjkfsa",
+      "phone": "amsfhvjshvf",
+      "email": "asfmmhvfssa",
+      "icon": "gear",
+      "id": 1779254662038,
+      "_id": "1779254662038",
+      "createdAt": "2026-05-20T05:24:22.039Z"
+    },
+    {
+      "id": 1,
+      "_id": "1",
+      "name": "Yagona interaktiv davlat xizmatlari",
+      "category": "E-xizmat",
+      "description": "Onlayn ariza topshirish, to'lovlar va so'rovlar.",
+      "department": "AT bo'limi",
+      "link": "https://my.gov.uz",
+      "phone": "+998 65 123-45-67",
+      "icon": "laptop"
+    },
+    {
+      "id": 2,
+      "_id": "2",
+      "name": "Ko'chmas mulkni ro'yxatdan o'tkazish",
+      "category": "Ro'yxatga olish",
+      "description": "Arizalar qabul qilish va ko'rib chiqish.",
+      "department": "Adliya bo'limi",
+      "phone": "+998 65 234-56-78",
+      "icon": "building"
+    },
+    {
+      "id": 3,
+      "_id": "3",
+      "name": "Tadbirkorlikni qo'llab-quvvatlash",
+      "category": "Biznes",
+      "description": "Biznes loyihalarni moliyalashtirish.",
+      "department": "Iqtisodiyot bo'limi",
+      "link": "https://business.uz",
+      "icon": "chart-line"
+    }
+  ],
+  "documents": [
+    {
+      "title": "jasvfjhsvfsdf",
+      "type": "Qaror",
+      "year": 2026,
+      "fileUrl": "asdgfhusaf",
+      "description": "safjsavfjhsf",
+      "id": 1779254679790,
+      "_id": "1779254679790",
+      "createdAt": "2026-05-20T05:24:39.790Z"
+    },
+    {
+      "id": 1,
+      "_id": "1",
+      "title": "2025-yilgi budjet haqida qaror",
+      "type": "Qaror",
+      "year": 2025,
+      "fileUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      "description": "Budjet tasdiqlangan."
+    },
+    {
+      "id": 2,
+      "_id": "2",
+      "title": "Biznes subsidiyalar dasturi",
+      "type": "Dastur",
+      "year": 2025,
+      "fileUrl": "https://www.orimi.com/pdf-test.pdf",
+      "description": "Subsidiyalar dasturi."
+    }
+  ],
+  "media": [
+    {
+      "title": "qwrgqwuewr",
+      "imageUrl": "https://c8.alamy.com/comp/3CAWYF0/bukhara-uzbekistan-may-29-2025-bronze-monument-to-nasreddin-khoja-in-the-central-city-square-of-bukhara-beside-the-lyabi-hauz-complex-3CAWYF0.jpg",
+      "category": "gallery",
+      "description": "qwkrejqwgruw",
+      "id": 1779254597344,
+      "_id": "1779254597344",
+      "createdAt": "2026-05-20T05:23:17.344Z"
+    },
+    {
+      "title": "Asilbek",
+      "imageUrl": "https://about-planet.ru/images/asia/goroda/buxara/bukhara.jpeg",
+      "category": "gallery",
+      "description": "akjsfhsavfjsaf asbfuasyhf",
+      "id": 1779254567512,
+      "_id": "1779254567512",
+      "createdAt": "2026-05-20T05:22:47.512Z"
+    },
+    {
+      "title": "Asilbek",
+      "imageUrl": "Asilbek",
+      "category": "gallery",
+      "description": "jhhfcf",
+      "id": 1779254535183,
+      "_id": "1779254535183",
+      "createdAt": "2026-05-20T05:22:15.183Z"
+    },
+    {
+      "title": "ozod",
+      "imageUrl": "https://about-planet.ru/images/asia/goroda/buxara/bukhara.jpeg",
+      "category": "gallery",
+      "description": "kjwerhjewtert",
+      "id": 1779192976635,
+      "_id": "1779192976635",
+      "createdAt": "2026-05-19T12:16:16.635Z",
+      "date": "2026-05-19T12:16:16.635Z"
+    }
+  ],
+  "statistics": [
+    {
+      "label": "sdfgsdg",
+      "value": 12242,
+      "icon": "chart-linesg",
+      "order": 32432,
+      "id": 1779193240574,
+      "_id": "1779193240574",
+      "createdAt": "2026-05-19T12:20:40.574Z",
+      "date": "2026-05-19T12:20:40.574Z"
+    },
+    {
+      "id": 1,
+      "_id": "1",
+      "label": "Aholi soni",
+      "value": 218000,
+      "icon": "users",
+      "order": 1
+    },
+    {
+      "id": 2,
+      "_id": "2",
+      "label": "Mahalla soni",
+      "value": 42,
+      "icon": "home",
+      "order": 2
+    },
+    {
+      "id": 3,
+      "_id": "3",
+      "label": "Maktablar",
+      "value": 35,
+      "icon": "school",
+      "order": 3
+    },
+    {
+      "id": 4,
+      "_id": "4",
+      "label": "Tibbiyot muassasalari",
+      "value": 12,
+      "icon": "hospital",
+      "order": 4
+    },
+    {
+      "id": 5,
+      "_id": "5",
+      "label": "Korxonalar",
+      "value": 156,
+      "icon": "factory",
+      "order": 5
+    },
+    {
+      "id": 6,
+      "_id": "6",
+      "label": "Fermer xo'jaliklari",
+      "value": 320,
+      "icon": "tractor",
+      "order": 6
+    }
+  ],
+  "contacts": [
+    {
+      "name": "Asilbek",
+      "email": "a22818086@gmail.com",
+      "phone": "998948947474",
+      "message": "asjfiusbhsbdugusd asbfusidfbsd",
+      "id": 1779254308740,
+      "createdAt": "2026-05-20T05:18:28.740Z",
+      "status": "new"
+    }
+  ],
+  "settings": {
+    "siteName": "sdjbfsdgbhj",
+    "contactPhone": "bashfbsdfkjbds",
+    "contactEmail": "fs sjhfsdhf  sdfmn ",
+    "contactAddress": "fshf sdjfhbsdfhjb",
+    "workingHours": "24u32984u320",
+    "socialLinks": {
+      "telegram": "asjf sdfh ",
+      "facebook": "asfh sdfj",
+      "instagram": "asbjfsafjb",
+      "youtube": "b hjabfsaf"
+    }
+  },
+  "leadership": [
+    {
+      "name": "asjgfuysagfyusd",
+      "position": "AJGFHSAFS",
+      "image": "https://tse2.mm.bing.net/th/id/OIP.ChvQYX7A_ShXXRd9yWHwjQHaNL?pid=Api&P=0&h=180",
+      "phone": "",
+      "email": "KJGFSAGFSAF",
+      "order": 0,
+      "id": 1779254827404,
+      "_id": "1779254827404",
+      "createdAt": "2026-05-20T05:27:07.404Z"
+    },
+    {
+      "name": "asilbek",
+      "position": "hokim",
+      "image": "https://tse2.mm.bing.net/th/id/OIP.ChvQYX7A_ShXXRd9yWHwjQHaNL?pid=Api&P=0&h=180",
+      "phone": "948947474",
+      "email": "a22818086@gmail.com",
+      "order": 7000,
+      "id": 1779254811183,
+      "_id": "1779254811183",
+      "createdAt": "2026-05-20T05:26:51.183Z"
+    }
+  ],
+  "projects": [
+    {
+      "title": "kehwtuweite",
+      "description": "3jjbsjhdhjsdg",
+      "progress": 78234632,
+      "budget": "sdmfgyusdgf",
+      "status": "active",
+      "deadline": "2026-05-23",
+      "id": 1779254849010,
+      "_id": "1779254849010",
+      "createdAt": "2026-05-20T05:27:29.010Z"
+    }
+  ]
+}

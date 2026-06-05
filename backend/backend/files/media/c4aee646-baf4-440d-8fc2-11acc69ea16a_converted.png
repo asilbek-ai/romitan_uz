@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormaFlex - Konverterlar dunyosi</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0f1e;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1f2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-slide {
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        /* Cards */
+        .converter-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideIn 0.5s ease;
+        }
+        
+        .converter-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #6366f1;
+            box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.5);
+            background: rgba(40, 51, 78, 0.9);
+        }
+
+        /* Gradient backgrounds */
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* File upload area */
+        .file-upload-area {
+            border: 2px dashed #334155;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .file-upload-area:hover, .file-upload-area.drag-over {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+            transform: scale(1.02);
+        }
+
+        /* Category buttons */
+        .category-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid transparent;
+        }
+        
+        .category-btn:hover {
+            background: #2d3a4f;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(99, 102, 241, 0.3);
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1e293b;
+            border-left: 4px solid #6366f1;
+            border-radius: 10px;
+            padding: 15px 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen">
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-check-circle text-green-500 text-xl"></i>
+            <span id="toastMessage">Fayl tayyor!</span>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="bg-[#0a0f1e]/80 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="gradient-bg p-2.5 rounded-xl">
+                        <i class="fas fa-exchange-alt text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-pink-400 text-transparent bg-clip-text">
+                        FormaFlex
+                    </span>
+                </div>
+
+                <!-- Search -->
+                <div class="hidden md:flex items-center bg-[#1e293b] rounded-lg px-3 py-1.5 w-64">
+                    <i class="fas fa-search text-gray-400 mr-2"></i>
+                    <input type="text" id="searchInput" placeholder="Qidirish..." class="bg-transparent border-none outline-none text-sm w-full text-gray-300 placeholder-gray-500">
+                </div>
+
+                <!-- Right menu -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-white transition">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <button class="text-gray-400 hover:text-white transition" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+                        <i class="fas fa-crown"></i>
+                        <span class="hidden sm:inline">Premium</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        
+        <!-- Header -->
+        <div class="text-center mb-12 animate-slide">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
+Qahramonov Asilbek
+            </h1>
+            <p class="text-gray-400 text-xl">100+ format. 0 soniyada. Bepul.</p>
+            
+            <!-- Stats -->
+            <div class="flex justify-center gap-8 mt-8">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-indigo-400">125K+</div>
+                    <div class="text-sm text-gray-500">Konvertatsiya</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-indigo-400">50K+</div>
+                    <div class="text-sm text-gray-500">Foydalanuvchi</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-indigo-400">24/7</div>
+                    <div class="text-sm text-gray-500">Ishlaydi</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8" id="categories">
+            <button class="category-btn active" data-category="all">🏠 Barchasi</button>
+            <button class="category-btn" data-category="documents">📄 Hujjatlar</button>
+            <button class="category-btn" data-category="images">🖼️ Rasmlar</button>
+            <button class="category-btn" data-category="audio">🎵 Audio</button>
+            <button class="category-btn" data-category="video">🎬 Video</button>
+            <button class="category-btn" data-category="archives">📦 Arxivlar</button>
+            <button class="category-btn" data-category="ebooks">📚 E-kitoblar</button>
+            <button class="category-btn" data-category="fonts">✒️ Shriftlar</button>
+        </div>
+
+        <!-- Search results (mobile) -->
+        <div class="md:hidden mb-4">
+            <div class="bg-[#1e293b] rounded-lg px-3 py-2">
+                <i class="fas fa-search text-gray-400 mr-2"></i>
+                <input type="text" id="mobileSearch" placeholder="Qidirish..." class="bg-transparent border-none outline-none text-sm w-full text-gray-300 placeholder-gray-500">
+            </div>
+        </div>
+
+        <!-- Converter Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8" id="convertersGrid"></div>
+
+        <!-- Selected Converter Section -->
+        <div id="selectedConverter" class="hidden animate-slide">
+            <button onclick="hideConverter()" class="mb-4 text-indigo-400 hover:text-indigo-300 transition flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i>
+                Barcha konverterlar
+            </button>
+            
+            <div class="converter-card !p-8">
+                <div class="text-center mb-8">
+                    <div class="text-7xl mb-4 animate-bounce" id="converterIcon">📄</div>
+                    <h2 class="text-3xl font-bold" id="converterTitle">PPTX → PDF</h2>
+                    <p class="text-gray-400 mt-2" id="converterDesc">Prezentatsiyalarni PDF ga o'giradi</p>
+                </div>
+
+                <!-- Progress bar -->
+                <div class="w-full bg-gray-700 rounded-full h-2 mb-6 hidden" id="progressContainer">
+                    <div class="progress-bar rounded-full" id="progressBar"></div>
+                </div>
+
+                <!-- File Upload Area -->
+                <div class="file-upload-area mb-6" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
+                    <i class="fas fa-cloud-upload-alt text-5xl text-indigo-400 mb-4"></i>
+                    <p class="text-xl mb-3">Faylni tashlang</p>
+                    <p class="text-gray-500 mb-4">yoki</p>
+                    <button class="gradient-bg text-white px-8 py-3 rounded-xl font-medium hover:opacity-90 transition">
+                        <i class="fas fa-folder-open mr-2"></i>Fayl tanlash
+                    </button>
+                    <input type="file" id="fileInput" class="hidden" onchange="handleFileSelect(event)">
+                    <p class="text-sm text-gray-500 mt-4" id="fileTypes">Qo'llab-quvvatlanadi: .pptx, .ppt</p>
+                </div>
+
+                <!-- File info -->
+                <div id="fileInfo" class="hidden bg-[#1e293b] rounded-xl p-4 mb-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-file-alt text-indigo-400 text-2xl"></i>
+                            <div>
+                                <p class="font-medium" id="fileName">fayl.pptx</p>
+                                <p class="text-sm text-gray-400" id="fileSize">1.2 MB</p>
+                            </div>
+                        </div>
+                        <button onclick="resetFileUpload()" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Options -->
+                <div class="space-y-3 mb-6" id="converterOptions">
+                    <label class="flex items-center space-x-3 p-3 bg-[#1e293b] rounded-lg">
+                        <input type="checkbox" class="w-5 h-5 text-indigo-600 rounded bg-[#1e293b] border-gray-600">
+                        <span>Yuqori sifat</span>
+                    </label>
+                    <label class="flex items-center space-x-3 p-3 bg-[#1e293b] rounded-lg">
+                        <input type="checkbox" class="w-5 h-5 text-indigo-600 rounded bg-[#1e293b] border-gray-600">
+                        <span>Barcha slaydlar</span>
+                    </label>
+                </div>
+
+                <!-- Convert Button -->
+                <button onclick="convertFile()" class="gradient-bg w-full py-4 rounded-xl font-bold text-lg hover:opacity-90 transition flex items-center justify-center gap-3" id="convertBtn">
+                    <span>Konvertatsiya qilish</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <!-- Recent Conversions -->
+                <div class="mt-6 pt-4 border-t border-gray-700">
+                    <p class="text-sm text-gray-400 mb-3">So'nggi konvertatsiyalar:</p>
+                    <div class="space-y-2 text-sm" id="recentConversions">
+                        <div class="flex justify-between items-center p-2 bg-[#1e293b] rounded-lg">
+                            <span>📄 prezentatsiya.pptx → PDF</span>
+                            <span class="text-gray-500 text-xs">2 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mt-16">
+            <h2 class="text-2xl font-bold text-center mb-8">Ko'p so'raladigan savollar</h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-[#1e293b] p-6 rounded-xl">
+                    <div class="text-indigo-400 text-2xl mb-3"><i class="fas fa-lock"></i></div>
+                    <h3 class="font-bold mb-2">Xavfsizmi?</h3>
+                    <p class="text-gray-400 text-sm">Barcha fayllar 1 soatdan keyin o'chiriladi</p>
+                </div>
+                <div class="bg-[#1e293b] p-6 rounded-xl">
+                    <div class="text-indigo-400 text-2xl mb-3"><i class="fas fa-bolt"></i></div>
+                    <h3 class="font-bold mb-2">Tezmi?</h3>
+                    <p class="text-gray-400 text-sm">O'rtacha 3-5 soniyada konvertatsiya</p>
+                </div>
+                <div class="bg-[#1e293b] p-6 rounded-xl">
+                    <div class="text-indigo-400 text-2xl mb-3"><i class="fas fa-coffee"></i></div>
+                    <h3 class="font-bold mb-2">Bepulmi?</h3>
+                    <p class="text-gray-400 text-sm">100% bepul, limit yo'q</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Konverterlar ma'lumotlar bazasi
+        const converters = [
+            // Hujjatlar (20+)
+            { icon: '📄', from: 'PDF', to: 'WORD', title: 'PDF → Word', category: 'documents', types: '.pdf', options: ['OCR bilan', 'Format saqlansin'], popular: true },
+            { icon: '📊', from: 'PPTX', to: 'PDF', title: 'PPTX → PDF', category: 'documents', types: '.pptx,.ppt', options: ['Yuqori sifat', 'Barcha slaydlar'], popular: true },
+            { icon: '📑', from: 'PDF', to: 'EXCEL', title: 'PDF → Excel', category: 'documents', types: '.pdf', options: ['Jadvallarni aniqlash'], popular: true },
+            { icon: '📝', from: 'WORD', to: 'PDF', title: 'Word → PDF', category: 'documents', types: '.docx,.doc', options: ['Havolalar saqlansin'] },
+            { icon: '📃', from: 'PDF', to: 'TXT', title: 'PDF → TXT', category: 'documents', types: '.pdf', options: ['OCR qo\'llash'] },
+            { icon: '📖', from: 'EPUB', to: 'PDF', title: 'EPUB → PDF', category: 'ebooks', types: '.epub', options: ['Format saqlansin'] },
+            { icon: '📘', from: 'PDF', to: 'EPUB', title: 'PDF → EPUB', category: 'ebooks', types: '.pdf', options: ['Mobil uchun mos'] },
+            { icon: '📗', from: 'FB2', to: 'PDF', title: 'FB2 → PDF', category: 'ebooks', types: '.fb2', options: ['Muqova qo\'shish'] },
+            { icon: '📕', from: 'MOBI', to: 'PDF', title: 'MOBI → PDF', category: 'ebooks', types: '.mobi', options: ['Kindle uchun'] },
+            
+            // Rasmlar (15+)
+            { icon: '🖼️', from: 'JPG', to: 'PNG', title: 'JPG → PNG', category: 'images', types: '.jpg,.jpeg', options: ['Transparent fon'], popular: true },
+            { icon: '🎨', from: 'PNG', to: 'JPG', title: 'PNG → JPG', category: 'images', types: '.png', options: ['Sifat (1-100)'] },
+            { icon: '🌐', from: 'WEBP', to: 'PNG', title: 'WEBP → PNG', category: 'images', types: '.webp', options: ['Maksimal sifat'] },
+            { icon: '📱', from: 'HEIC', to: 'JPG', title: 'HEIC → JPG', category: 'images', types: '.heic', options: ['iPhone dan'] },
+            { icon: '🎭', from: 'GIF', to: 'MP4', title: 'GIF → MP4', category: 'video', types: '.gif', options: ['FPS 30', '1080p'] },
+            { icon: '🔄', from: 'SVG', to: 'PNG', title: 'SVG → PNG', category: 'images', types: '.svg', options: ['O\'lcham tanlash'] },
+            { icon: '📸', from: 'RAW', to: 'JPG', title: 'RAW → JPG', category: 'images', types: '.raw,.cr2,.nef', options: ['Kameralar uchun'] },
+            { icon: '🎯', from: 'ICO', to: 'PNG', title: 'ICO → PNG', category: 'images', types: '.ico', options: ['Icon uchun'] },
+            { icon: '🖌️', from: 'PSD', to: 'PNG', title: 'PSD → PNG', category: 'images', types: '.psd', options: ['Qatlamlarni birlashtirish'] },
+            
+            // Audio (12+)
+            { icon: '🎵', from: 'MP3', to: 'WAV', title: 'MP3 → WAV', category: 'audio', types: '.mp3', options: ['44100 Hz', 'Stereo'] },
+            { icon: '🎶', from: 'WAV', to: 'MP3', title: 'WAV → MP3', category: 'audio', types: '.wav', options: ['320 kbps'], popular: true },
+            { icon: '🎼', from: 'M4A', to: 'MP3', title: 'M4A → MP3', category: 'audio', types: '.m4a', options: ['Yuqori sifat'] },
+            { icon: '🎤', from: 'AAC', to: 'MP3', title: 'AAC → MP3', category: 'audio', types: '.aac', options: ['Tez konvertatsiya'] },
+            { icon: '🎧', from: 'FLAC', to: 'MP3', title: 'FLAC → MP3', category: 'audio', types: '.flac', options: ['Lossless'] },
+            { icon: '📻', from: 'OGG', to: 'MP3', title: 'OGG → MP3', category: 'audio', types: '.ogg', options: ['Sifatni saqlash'] },
+            
+            // Video (15+)
+            { icon: '🎬', from: 'MP4', to: 'AVI', title: 'MP4 → AVI', category: 'video', types: '.mp4', options: ['Codec H264'] },
+            { icon: '📹', from: 'AVI', to: 'MP4', title: 'AVI → MP4', category: 'video', types: '.avi', options: ['Tezkor'], popular: true },
+            { icon: '🎥', from: 'MKV', to: 'MP4', title: 'MKV → MP4', category: 'video', types: '.mkv', options: ['Subtitr saqlansin'] },
+            { icon: '🎞️', from: 'MOV', to: 'MP4', title: 'MOV → MP4', category: 'video', types: '.mov', options: ['Apple uchun'] },
+            { icon: '📽️', from: 'WMV', to: 'MP4', title: 'WMV → MP4', category: 'video', types: '.wmv', options: ['Windows uchun'] },
+            { icon: '🎦', from: 'FLV', to: 'MP4', title: 'FLV → MP4', category: 'video', types: '.flv', options: ['Flash dan'] },
+            { icon: '📀', from: 'DVD', to: 'MP4', title: 'DVD → MP4', category: 'video', types: '.vob', options: ['DVD dan ripping'] },
+            { icon: '🎪', from: 'WEBM', to: 'MP4', title: 'WEBM → MP4', category: 'video', types: '.webm', options: ['Internet uchun'] },
+            
+            // Arxivlar (10+)
+            { icon: '📦', from: 'ZIP', to: 'RAR', title: 'ZIP → RAR', category: 'archives', types: '.zip', options: ['Siqish darajasi'] },
+            { icon: '🗜️', from: 'RAR', to: 'ZIP', title: 'RAR → ZIP', category: 'archives', types: '.rar', options: ['Tez siqish'], popular: true },
+            { icon: '📁', from: '7Z', to: 'ZIP', title: '7Z → ZIP', category: 'archives', types: '.7z', options: ['Maksimal siqish'] },
+            { icon: '🎁', from: 'TAR', to: 'ZIP', title: 'TAR → ZIP', category: 'archives', types: '.tar', options: ['Linux uchun'] },
+            { icon: '💾', from: 'ISO', to: 'ZIP', title: 'ISO → ZIP', category: 'archives', types: '.iso', options: ['Disk image'] },
+            
+            // Shriftlar
+            { icon: '✒️', from: 'TTF', to: 'WOFF', title: 'TTF → WOFF', category: 'fonts', types: '.ttf', options: ['Web uchun'] },
+            { icon: '🖋️', from: 'OTF', to: 'TTF', title: 'OTF → TTF', category: 'fonts', types: '.otf', options: ['Windows uchun'] },
+        ];
+
+        let currentCategory = 'all';
+        let selectedConverter = null;
+        let currentFile = null;
+
+        // Gridni yuklash
+        function loadGrid(category = 'all', searchQuery = '') {
+            const grid = document.getElementById('convertersGrid');
+            grid.innerHTML = '';
+            
+            let filtered = category === 'all' ? converters : converters.filter(c => c.category === category);
+            
+            // Search filter
+            if (searchQuery) {
+                filtered = filtered.filter(c => 
+                    c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    c.from.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    c.to.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+            
+            // Popularlarni birinchi chiqarish
+            filtered.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-20"><i class="fas fa-search text-5xl text-gray-600 mb-4"></i><p class="text-gray-400">Hech narsa topilmadi</p></div>';
+                return;
+            }
+            
+            filtered.forEach(conv => {
+                const card = document.createElement('div');
+                card.className = 'converter-card';
+                card.onclick = () => showConverter(conv);
+                
+                let popularBadge = conv.popular ? '<span class="absolute top-2 right-2 bg-yellow-500 text-xs px-2 py-1 rounded-full">⭐ Popular</span>' : '';
+                
+                card.innerHTML = `
+                    <div class="relative">
+                        ${popularBadge}
+                        <div class="text-5xl mb-3 text-center">${conv.icon}</div>
+                        <h3 class="font-bold text-lg text-center">${conv.title}</h3>
+                        <p class="text-gray-400 text-sm text-center mt-1">${conv.from} → ${conv.to}</p>
+                        <div class="flex gap-1 justify-center mt-3">
+                            <span class="text-xs bg-indigo-600/30 text-indigo-300 px-2 py-1 rounded-full">${conv.types.split(',')[0]}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Konverterni ko'rsatish
+        function showConverter(converter) {
+            selectedConverter = converter;
+            document.getElementById('convertersGrid').style.display = 'none';
+            document.getElementById('categories').style.display = 'none';
+            document.getElementById('selectedConverter').classList.remove('hidden');
+            
+            document.getElementById('converterIcon').textContent = converter.icon;
+            document.getElementById('converterTitle').textContent = `${converter.from} → ${converter.to}`;
+            document.getElementById('converterDesc').textContent = `${converter.from} fayllarni ${converter.to} formatiga o'tkazish`;
+            document.getElementById('fileTypes').textContent = `Qo'llab-quvvatlanadi: ${converter.types}`;
+            
+            // Options
+            const optionsDiv = document.getElementById('converterOptions');
+            optionsDiv.innerHTML = '';
+            converter.options.forEach(opt => {
+                optionsDiv.innerHTML += `
+                    <label class="flex items-center space-x-3 p-3 bg-[#1e293b] rounded-lg hover:bg-[#2d3a4f] transition">
+                        <input type="checkbox" class="w-5 h-5 text-indigo-600 rounded bg-[#1e293b] border-gray-600">
+                        <span class="text-gray-300">${opt}</span>
+                    </label>
+                `;
+            });
+            
+            // Reset file upload
+            resetFileUpload();
+        }
+
+        // Konverterni yashirish
+        function hideConverter() {
+            document.getElementById('convertersGrid').style.display = 'grid';
+            document.getElementById('categories').style.display = 'flex';
+            document.getElementById('selectedConverter').classList.add('hidden');
+        }
+
+        // Fayl tanlash
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                currentFile = file;
+                showFileInfo(file);
+            }
+        }
+
+        function showFileInfo(file) {
+            document.getElementById('fileUploadArea').style.display = 'none';
+            document.getElementById('fileInfo').classList.remove('hidden');
+            
+            document.getElementById('fileName').textContent = file.name;
+            
+            // File size format
+            let size = file.size;
+            if (size < 1024) {
+                document.getElementById('fileSize').textContent = size + ' B';
+            } else if (size < 1024 * 1024) {
+                document.getElementById('fileSize').textContent = (size / 1024).toFixed(1) + ' KB';
+            } else {
+                document.getElementById('fileSize').textContent = (size / (1024 * 1024)).toFixed(2) + ' MB';
+            }
+        }
+
+        // File uploadni reset qilish
+        function resetFileUpload() {
+            currentFile = null;
+            document.getElementById('fileUploadArea').style.display = 'block';
+            document.getElementById('fileInfo').classList.add('hidden');
+            document.getElementById('progressContainer').classList.add('hidden');
+            document.getElementById('convertBtn').innerHTML = '<span>Konvertatsiya qilish</span><i class="fas fa-arrow-right"></i>';
+        }
+
+        // Konvertatsiya qilish
+        function convertFile() {
+            if (!currentFile && selectedConverter) {
+                showToast('Iltimos, fayl tanlang!', 'error');
+                return;
+            }
+            
+            const btn = document.getElementById('convertBtn');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            
+            // Show progress
+            progressContainer.classList.remove('hidden');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Konvertatsiya...';
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        // Success
+                        progressContainer.classList.add('hidden');
+                        btn.innerHTML = '<i class="fas fa-check mr-2"></i>Muvaffaqiyatli!';
+                        
+                        // Add to recent
+                        const recent = document.getElementById('recentConversions');
+                        const time = new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' });
+                        recent.innerHTML = `
+                            <div class="flex justify-between items-center p-2 bg-[#1e293b] rounded-lg">
+                                <span>📄 ${currentFile.name} → ${selectedConverter.to}</span>
+                                <span class="text-gray-500 text-xs">${time}</span>
+                            </div>
+                        ` + recent.innerHTML;
+                        
+                        // Reset button after 2 seconds
+                        setTimeout(() => {
+                            btn.innerHTML = '<span>Konvertatsiya qilish</span><i class="fas fa-arrow-right"></i>';
+                            resetFileUpload();
+                            showToast('Konvertatsiya tugadi! Yuklab oling.', 'success');
+                            
+                            // Simulate download
+                            setTimeout(() => {
+                                const a = document.createElement('a');
+                                a.href = '#';
+                                a.download = `converted.${selectedConverter.to.toLowerCase()}`;
+                                a.click();
+                            }, 500);
+                        }, 1500);
+                    }, 500);
+                }
+                progressBar.style.width = progress + '%';
+            }, 200);
+        }
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            if (type === 'error') {
+                toast.style.borderLeftColor = '#ef4444';
+            } else {
+                toast.style.borderLeftColor = '#6366f1';
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Search functionality
+        function handleSearch(query) {
+            loadGrid(currentCategory, query);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGrid();
+            
+            // Category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentCategory = this.dataset.category;
+                    loadGrid(currentCategory, document.getElementById('searchInput')?.value || '');
+                });
+            });
+            
+            // Search
+            const searchInput = document.getElementById('searchInput');
+            const mobileSearch = document.getElementById('mobileSearch');
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => handleSearch(e.target.value));
+            }
+            if (mobileSearch) {
+                mobileSearch.addEventListener('input', (e) => handleSearch(e.target.value));
+            }
+            
+            // Drag and drop
+            const uploadArea = document.getElementById('fileUploadArea');
+            if (uploadArea) {
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    uploadArea.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    });
+                });
+                
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    uploadArea.addEventListener(eventName, () => {
+                        uploadArea.classList.add('drag-over');
+                    });
+                });
+                
+                ['dragleave', 'drop'].forEach(eventName => {
+                    uploadArea.addEventListener(eventName, () => {
+                        uploadArea.classList.remove('drag-over');
+                    });
+                });
+                
+                uploadArea.addEventListener('drop', (e) => {
+                    const file = e.dataTransfer.files[0];
+                    if (file && selectedConverter) {
+                        currentFile = file;
+                        showFileInfo(file);
+                    }
+                });
+            }
+            
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('fa-moon')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    document.body.style.background = '#f8fafc';
+                    document.body.style.color = '#0f172a';
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    document.body.style.background = '#0a0f1e';
+                    document.body.style.color = '#f8fafc';
+                }
+            });
+        });
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

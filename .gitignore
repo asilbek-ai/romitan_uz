@@ -1,0 +1,62 @@
+# =========================
+# GLOBAL
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# =========================
+# FRONTEND (React + Vite)
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+
+# Env files
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Debug
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# =========================
+# BACKEND (Java / Spring)
+# =========================
+backend/target/
+backend/build/
+backend/out/
+
+# Maven
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+backend/.gradle/
+
+# Java compiled files
+*.class
+
+# Logs
+backend/logs/
+backend/*.log
+
+# Env
+backend/.env
+backend/application-local.yml
+backend/application-local.properties
+
+# =========================
+# OS GENERATED
+# =========================
+Desktop.ini

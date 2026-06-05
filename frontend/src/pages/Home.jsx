@@ -216,7 +216,7 @@ Amudarya, Zarafshan, canal network (total length 245 km)`,
 
       // ============ HOKIM VA RAHBARIYAT TO'LIQ ============
       hokim_batafsil: {
-        uz: `🏛️ JONDOR TUMANI RAHBARIYATI
+        uz: `🏛️ ROMITAN TUMANI RAHBARIYATI
 
 👨‍💼 TUMAN HOKIMI: Xudoyev Jamshid Rajabovich
 

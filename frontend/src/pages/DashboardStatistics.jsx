@@ -22,7 +22,7 @@ export default function DashboardStatistics() {
 
   // Load dashboard data from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem('jondor_dashboard_data');
+    const saved = localStorage.getItem('romitan_dashboard_data');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -137,7 +137,7 @@ export default function DashboardStatistics() {
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#003580] to-[#0066cc] bg-clip-text text-transparent">
             Smart City Dashboard
           </h1>
-          <p className="text-gray-500 mt-2">Jondor tumani faoliyat ko'rsatkichlari</p>
+          <p className="text-gray-500 mt-2">Romitan tumani faoliyat ko'rsatkichlari</p>
         </div>
 
         {/* Stats Cards */}

@@ -67,7 +67,7 @@ export default function VirtualTour360() {
           </h2>
           <div className="w-24 h-1 mx-auto mt-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
           <p className="max-w-2xl mx-auto mt-4 text-gray-700">
-            Virtual sayohat orqali <span className="font-semibold text-blue-600">Jondor tumanini</span> kashf eting. 
+            Virtual sayohat orqali <span className="font-semibold text-blue-600">Romitan tumanini</span> kashf eting. 
             Erkin harakatlaning va tumanimizni ajoyib tafsilotlarda kuzating.
           </p>
         </div>
@@ -106,7 +106,7 @@ export default function VirtualTour360() {
             ) : (
               <iframe 
                 id="tour-container"
-                title="Jondor 360° Virtual Tour" 
+                title="Romitan 360° Virtual Tour" 
                 src={tourUrl} 
                 className="absolute top-0 left-0 w-full h-full" 
                 frameBorder="0" 

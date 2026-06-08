@@ -83,7 +83,7 @@ export default function News() {
           </div>
           
           <p className="max-w-2xl mx-auto text-lg text-gray-600">
-            {t("Jondor tumanidagi eng so'nggi yangiliklar va voqealardan xabardor bo'ling", 
+            {t("Romitan tumanidagi eng so'nggi yangiliklar va voqealardan xabardor bo'ling", 
                "Будьте в курсе последних новостей и событий Джондорского района")}
           </p>
         </motion.div>

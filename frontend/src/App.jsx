@@ -18,6 +18,7 @@ import ScrollToTop from './components/ScrollToTop';
 import DashboardStatistics from './pages/DashboardStatistics';
 import MobileInfo from './pages/MobileInfo';
 import AdminTopics from './pages/AdminTopics';
+
 import { authAPI, documentsAPI, mediaAPI, newsAPI, servicesAPI, statisticsAPI, toApiUrl } from './services/api';
 
 // OneID va boshqa tashkilotlar uchun login/register sahifalari

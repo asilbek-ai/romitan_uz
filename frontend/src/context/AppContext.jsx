@@ -3,127 +3,86 @@ import React, { createContext, useState, useEffect } from 'react';
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [lang, setLang] = useState('uz');
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [lang, setLang] = useState(() => {
+    const saved = localStorage.getItem('lang');
+    return saved || 'uz';
+  });
+  const [isAdmin, setIsAdmin] = useState(() => {
+    return localStorage.getItem('adminLoggedIn') === 'true';
+  });
   const [loading, setLoading] = useState(true);
   
-  // Barcha state'lar
-  const [news, setNews] = useState([]);
-  const [services, setServices] = useState([]);
+  // Statistics state - faqat localStorage bilan
   const [statistics, setStatistics] = useState([]);
-  const [organizations, setOrganizations] = useState([]);
-  const [gallery, setGallery] = useState([]);
-  const [carousel, setCarousel] = useState([]);
-  const [leadership, setLeadership] = useState([]);
-  const [documents, setDocuments] = useState([]);
-  const [faqs, setFaqs] = useState([]);
-  const [contacts, setContacts] = useState([]);
-  const [subscribers, setSubscribers] = useState([]);
-  const [topics, setTopics] = useState([]);
-  const [receptionHours, setReceptionHours] = useState({
-    governor: { days: 'Dushanba - Juma', daysRu: 'Понедельник - Пятница', time: '15:00 - 17:00', location: 'Hokimiyat binosi, 2-qavat', locationRu: 'Здание хокимията, 2-этаж' },
-    citizens: { days: 'Har payshanba', daysRu: 'Каждый четверг', time: '10:00 - 13:00', phone: '+998 65 380-00-00', phoneRu: '+998 65 380-00-00' }
-  });
 
-  // Default topics
-  const defaultTopics = [
-    { 
-      id: 1, 
-      icon: "fa-landmark",
-      title: { uz: "Jondor tumani", ru: "Джондорский район", en: "Jondor District" },
-      image: "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?w=400",
-      description: { 
-        uz: "Jondor tumani - Buxoro viloyatidagi go'zal tuman. 1926-yilda tashkil topgan. Aholisi 154,700 dan ortiq.",
-        ru: "Джондорский район - красивый район Бухарской области. Основан в 1926 году. Население более 154 700 человек.",
-        en: "Jondor district is a beautiful district in Bukhara region. Founded in 1926. Population over 154,700."
-      }
-    },
-    { 
-      id: 2, 
-      icon: "fa-history",
-      title: { uz: "Tarix", ru: "История", en: "History" },
-      image: "https://images.pexels.com/photos/161931/lonely-tree-tree-sunset-field-161931.jpeg?w=400",
-      description: { 
-        uz: "Jondor tumani 1926-yilda tashkil topgan. Tuman hududida 20 dan ortiq tarixiy obidalar mavjud.",
-        ru: "Джондорский район основан в 1926 году. На территории района более 20 исторических памятников.",
-        en: "Jondor district was founded in 1926. There are over 20 historical monuments."
-      }
-    },
-    { 
-      id: 3, 
-      icon: "fa-map-marker-alt",
-      title: { uz: "Geografiya", ru: "География", en: "Geography" },
-      image: "https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg?w=400",
-      description: { 
-        uz: "Tuman maydoni 1.2 ming km². Buxoro viloyatining shimoli-g'arbiy qismida joylashgan.",
-        ru: "Площадь района 1,2 тыс. км². Расположен в северо-западной части Бухарской области.",
-        en: "The area of the district is 1.2 thousand km². Located in the northwestern part of Bukhara region."
-      }
-    }
+  // Statistics CRUD operations - API YO'Q, faqat localStorage
+  const addStatistic = (item) => {
+    console.log('Adding statistic (localStorage):', item);
+    const newItem = { 
+      ...item, 
+      id: Date.now(),
+      value: typeof item.value === 'string' ? parseFloat(item.value.replace(/[^0-9.-]/g, '')) || 0 : item.value
+    };
+    const updated = [...statistics, newItem];
+    setStatistics(updated);
+    localStorage.setItem('admin_statistics', JSON.stringify(updated));
+    console.log('Statistics after add:', updated);
+    return newItem;
+  };
+
+  const updateStatistic = (item) => {
+    console.log('Updating statistic (localStorage):', item);
+    const updated = statistics.map(s => s.id === item.id ? item : s);
+    setStatistics(updated);
+    localStorage.setItem('admin_statistics', JSON.stringify(updated));
+    console.log('Statistics after update:', updated);
+  };
+
+  const deleteStatistic = (id) => {
+    console.log('Deleting statistic (localStorage):', id);
+    const updated = statistics.filter(s => s.id !== id);
+    setStatistics(updated);
+    localStorage.setItem('admin_statistics', JSON.stringify(updated));
+    console.log('Statistics after delete:', updated);
+  };
+
+  // Default statistika ma'lumotlari
+  const defaultStatistics = [
+    { id: 1, label: "Aholi soni", labelRu: "Численность населения", value: 167400, icon: "Users", color: "blue" },
+    { id: 2, label: "Tuman maydoni", labelRu: "Площадь района", value: 1100, icon: "MapPin", color: "green" },
+    { id: 3, label: "Maktablar", labelRu: "Школы", value: 42, icon: "School", color: "orange" },
+    { id: 4, label: "Kasalxonalar", labelRu: "Больницы", value: 6, icon: "Hospital", color: "red" },
+    { id: 5, label: "Korxonalar", labelRu: "Предприятия", value: 1800, icon: "Building", color: "purple" },
+    { id: 6, label: "Fermer xo'jaliklari", labelRu: "Фермерские хозяйства", value: 120, icon: "Briefcase", color: "teal" },
   ];
 
-  // LocalStorage dan yuklash
+  // Load data from localStorage
   useEffect(() => {
-    const loadData = async () => {
+    const loadData = () => {
       try {
-        // Admin login status
-        const savedAdmin = localStorage.getItem('adminLoggedIn');
-        if (savedAdmin === 'true') setIsAdmin(true);
-
-        // Topics yuklash
-        const savedTopics = localStorage.getItem('jondor_topics');
-        if (savedTopics && savedTopics !== 'undefined') {
-          const parsed = JSON.parse(savedTopics);
+        // Load statistics
+        const savedStats = localStorage.getItem('admin_statistics');
+        console.log('Raw saved statistics:', savedStats);
+        
+        if (savedStats && savedStats !== 'undefined' && savedStats !== 'null') {
+          const parsed = JSON.parse(savedStats);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            setTopics(parsed);
+            setStatistics(parsed);
+            console.log('Loaded statistics from localStorage:', parsed);
           } else {
-            setTopics(defaultTopics);
-            localStorage.setItem('jondor_topics', JSON.stringify(defaultTopics));
+            setStatistics(defaultStatistics);
+            localStorage.setItem('admin_statistics', JSON.stringify(defaultStatistics));
+            console.log('Set default statistics:', defaultStatistics);
           }
         } else {
-          setTopics(defaultTopics);
-          localStorage.setItem('jondor_topics', JSON.stringify(defaultTopics));
+          setStatistics(defaultStatistics);
+          localStorage.setItem('admin_statistics', JSON.stringify(defaultStatistics));
+          console.log('No saved statistics, set default:', defaultStatistics);
         }
-
-        // Boshqa ma'lumotlar
-        const savedNews = localStorage.getItem('jondor_news');
-        if (savedNews) setNews(JSON.parse(savedNews));
-        
-        const savedServices = localStorage.getItem('jondor_services');
-        if (savedServices) setServices(JSON.parse(savedServices));
-        
-        const savedStats = localStorage.getItem('jondor_statistics');
-        if (savedStats) setStatistics(JSON.parse(savedStats));
-        
-        const savedOrgs = localStorage.getItem('jondor_organizations');
-        if (savedOrgs) setOrganizations(JSON.parse(savedOrgs));
-        
-        const savedGallery = localStorage.getItem('jondor_gallery');
-        if (savedGallery) setGallery(JSON.parse(savedGallery));
-        
-        const savedCarousel = localStorage.getItem('jondor_carousel');
-        if (savedCarousel) setCarousel(JSON.parse(savedCarousel));
-        
-        const savedLeadership = localStorage.getItem('jondor_leadership');
-        if (savedLeadership) setLeadership(JSON.parse(savedLeadership));
-        
-        const savedDocuments = localStorage.getItem('jondor_documents');
-        if (savedDocuments) setDocuments(JSON.parse(savedDocuments));
-        
-        const savedFaqs = localStorage.getItem('jondor_faqs');
-        if (savedFaqs) setFaqs(JSON.parse(savedFaqs));
-        
-        const savedContacts = localStorage.getItem('jondor_contacts');
-        if (savedContacts) setContacts(JSON.parse(savedContacts));
-        
-        const savedSubscribers = localStorage.getItem('jondor_subscribers');
-        if (savedSubscribers) setSubscribers(JSON.parse(savedSubscribers));
-        
-        const savedReception = localStorage.getItem('jondor_reception');
-        if (savedReception) setReceptionHours(JSON.parse(savedReception));
-
       } catch (error) {
-        console.error('Error loading data:', error);
+        console.error('Error loading statistics:', error);
+        setStatistics(defaultStatistics);
+        localStorage.setItem('admin_statistics', JSON.stringify(defaultStatistics));
       } finally {
         setLoading(false);
       }
@@ -132,25 +91,10 @@ export const AppProvider = ({ children }) => {
     loadData();
   }, []);
 
-  // Topics CRUD
-  const addTopic = (topic) => {
-    const newTopic = { ...topic, id: Date.now() };
-    const updated = [...topics, newTopic];
-    setTopics(updated);
-    localStorage.setItem('jondor_topics', JSON.stringify(updated));
-  };
-
-  const updateTopic = (id, updatedTopic) => {
-    const updated = topics.map(t => t.id === id ? { ...t, ...updatedTopic } : t);
-    setTopics(updated);
-    localStorage.setItem('jondor_topics', JSON.stringify(updated));
-  };
-
-  const deleteTopic = (id) => {
-    const updated = topics.filter(t => t.id !== id);
-    setTopics(updated);
-    localStorage.setItem('jondor_topics', JSON.stringify(updated));
-  };
+  // Save language
+  useEffect(() => {
+    localStorage.setItem('lang', lang);
+  }, [lang]);
 
   const login = async (username, password) => {
     if (username === 'admin' && password === 'admin123') {
@@ -164,11 +108,6 @@ export const AppProvider = ({ children }) => {
   const logout = () => {
     setIsAdmin(false);
     localStorage.removeItem('adminLoggedIn');
-  };
-
-  const updateReceptionHours = (data) => {
-    setReceptionHours(data);
-    localStorage.setItem('jondor_reception', JSON.stringify(data));
   };
 
   const t = (uz, ru, en) => {
@@ -191,19 +130,7 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider value={{
       lang, setLang, t, isAdmin, login, logout,
-      news, setNews,
-      services, setServices,
-      statistics, setStatistics,
-      organizations, setOrganizations,
-      gallery, setGallery,
-      carousel, setCarousel,
-      leadership, setLeadership,
-      documents, setDocuments,
-      faqs, setFaqs,
-      contacts, setContacts,
-      subscribers, setSubscribers,
-      topics, addTopic, updateTopic, deleteTopic,
-      receptionHours, updateReceptionHours
+      statistics, addStatistic, updateStatistic, deleteStatistic,
     }}>
       {children}
     </AppContext.Provider>

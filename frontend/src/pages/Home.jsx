@@ -15,6 +15,7 @@ import Statistics from "./Statistics";
 import { useNavigate } from "react-router-dom";
 import rasm from "../../public/image.png";
 
+
 export default function Home() {
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const { t, adminData, addSubscriber, lang, setLang } = useContext(AppContext);
@@ -51,6 +52,8 @@ export default function Home() {
     }
   }, [chatMessages, isTyping]);
 
+
+  
   // Boshlang'ich xabar
   useEffect(() => {
     if (chatMessages.length === 0) {
@@ -111,99 +114,135 @@ export default function Home() {
     speechSynth.speak(utterance);
   };
 
-  // Aqlli AI javob berish funksiyasi (3 tilda)
-  const getAIResponse = (userMessage, language) => {
-    const msg = userMessage.toLowerCase().trim();
+  // Aqlli AI javob berish funksiyasi (3 tilda) - TO'LIQ VERSIYA
+const getAIResponse = (userMessage, language) => {
+  const msg = userMessage.toLowerCase().trim();
 
-    const beautifyText = (text) => {
-      let result = text;
-      result = result.replace(/\?/g, "? 🤔");
-      result = result.replace(/\!/g, "! 😊");
-      result = result.replace(/\. /g, ". ✨ ");
-      return result;
-    };
+  const beautifyText = (text) => {
+    let result = text;
+    result = result.replace(/\?/g, "? 🤔");
+    result = result.replace(/\!/g, "! 😊");
+    result = result.replace(/\. /g, ". ✨ ");
+    return result;
+  };
 
-    const responses = {
-      salom: {
-        uz: "Assalomu alaykum! 👋 Men Romitan tumanining aqlli AI yordamchisiman. Sizga quyidagilar haqida to'liq ma'lumot bera olaman:\n\n📍 Tuman haqida umumiy\n🏛️ Rahbariyat va hokim\n📊 Statistika (aholi, maktablar, korxonalar)\n📞 Telefon va aloqa\n✉️ Email va manzil\n🏫 Ta'lim va sog'liq\n💰 Iqtisodiyot va fermerlik\n🏦 ROMITAN BANK (kreditlar, kartalar)\n📰 Yangiliklar va galereya\n\nSavolingizni yozing! 😊",
-        ru: "Здравствуйте! 👋 Я умный AI помощник Ромитанского района. Могу предоставить полную информацию о:\n\n📍 Общая информация о районе\n🏛️ Руководство и хоким\n📊 Статистика (население, школы, предприятия)\n📞 Телефоны и контакты\n✉️ Email и адрес\n🏫 Образование и здравоохранение\n💰 Экономика и фермерство\n🏦 ROMITAN БАНК (кредиты, карты)\n📰 Новости и галерея\n\nНапишите ваш вопрос! 😊",
-        en: "Hello! 👋 I am the smart AI assistant of Romitan district. I can provide complete information about:\n\n📍 General district info\n🏛️ Leadership and khokim\n📊 Statistics (population, schools, enterprises)\n📞 Phone and contacts\n✉️ Email and address\n🏫 Education and healthcare\n💰 Economy and farming\n🏦 ROMITAN BANK (loans, cards)\n📰 News and gallery\n\nWrite your question! 😊",
-      },
-      tuman_batafsil: {
-        uz: `📍 ROMITAN TUMANI HAQIDA TO'LIQ MA'LUMOT
+  const responses = {
+    salom: {
+      uz: "Assalomu alaykum! 👋 Men Romitan tumanining aqlli AI yordamchisiman. Sizga quyidagilar haqida to'liq ma'lumot bera olaman:\n\n📍 Tuman haqida umumiy\n🏛️ Rahbariyat va hokim\n📊 Statistika (aholi, maktablar, korxonalar)\n📞 Telefon va aloqa\n✉️ Email va manzil\n🏫 Ta'lim va sog'liq\n💰 Iqtisodiyot va fermerlik\n🏦 ROMITAN BANK (kreditlar, kartalar)\n📰 Yangiliklar va galereya\n🏛️ Tarixiy obidalar\n🕌 Ziyoratgohlar\n\nSavolingizni yozing! 😊",
+      ru: "Здравствуйте! 👋 Я умный AI помощник Ромитанского района. Могу предоставить полную информацию о:\n\n📍 Общая информация о районе\n🏛️ Руководство и хоким\n📊 Статистика (население, школы, предприятия)\n📞 Телефоны и контакты\n✉️ Email и адрес\n🏫 Образование и здравоохранение\n💰 Экономика и фермерство\n🏦 ROMITAN БАНК (кредиты, карты)\n📰 Новости и галерея\n🏛️ Исторические памятники\n🕌 Святыни\n\nНапишите ваш вопрос! 😊",
+      en: "Hello! 👋 I am the smart AI assistant of Romitan district. I can provide complete information about:\n\n📍 General district info\n🏛️ Leadership and khokim\n📊 Statistics (population, schools, enterprises)\n📞 Phone and contacts\n✉️ Email and address\n🏫 Education and healthcare\n💰 Economy and farming\n🏦 ROMITAN BANK (loans, cards)\n📰 News and gallery\n🏛️ Historical monuments\n🕌 Holy sites\n\nWrite your question! 😊",
+    },
+    
+    // TUMAN HAQIDA TO'LIQ MA'LUMOT
+    tuman_batafsil: {
+      uz: `📍 ROMITAN TUMANI HAQIDA TO'LIQ MA'LUMOT
 
-📅 TASHKIL TOPGAN SANASI: 1926-yil
-📏 MAYDONI: 890 km²
-👥 AHOLISI: 180,000 dan ortiq kishi
-🏘️ MFY: 13 ta
-🏡 QISHL OQLAR: 38 ta
+📅 TASHKIL TOPGAN SANASI: 1926-yil 29-sentabr
+📏 MAYDONI: 1,100 km²
+👥 AHOLISI (2024): 167,400 kishi
+🏘️ MA'MURIY HUDUDLAR:
+• 2 ta shahar: Romitan va Gazli
+• 11 ta shaharcha
+• 11 ta qishloq fuqarolar yig'ini
 
 📜 TARIXIY MA'LUMOT:
-Romitan tumani qadimiy tarixga ega. Romitan shahri buyuk allomalar vatani hisoblanadi.
+Romitan tumani 1926-yil 29-sentabrda tashkil etilgan. 
+1962-yilda Buxoro tumani tarkibiga qo'shilgan. 
+1970-yil 7-dekabrda qayta tiklangan.
 
 🗺️ GEOGRAFIK JOYLASHUVI:
-Buxoro viloyatining markaziy qismida joylashgan. Shimoldan Shofirkon tumani, janubdan Buxoro tumani, sharqdan Vobkent tumani, g'arbdan Qorako'l tumani bilan chegaradosh.
+Buxoro viloyatining markaziy qismida joylashgan. 
+Shimoldan Shofirkon tumani, janubdan Buxoro tumani, 
+sharqdan Vobkent tumani, g'arbdan Qorako'l tumani bilan chegaradosh.
 
 🌡️ IQLIMI:
-Kontinental - yozi issiq (40-45°C), qishi sovuq (-5°C dan -15°C gacha). Yillik yog'in miqdori 150-200 mm.
+Kontinental - yozi issiq (40-45°C), qishi sovuq (-5°C dan -15°C gacha). 
+Yillik yog'in miqdori 150-200 mm.
 
 💧 SUV RESURSLARI:
-Zarafshon daryosi, Romitan kanali va sug'orish tarmoqlari`,
-        ru: `📍 ПОЛНАЯ ИНФОРМАЦИЯ О РОМИТАНСКОМ РАЙОНЕ
+Zarafshon daryosi, Romitan kanali va sug'orish tarmoqlari
 
-📅 ДАТА ОСНОВАНИЯ: 1926 год
-📏 ПЛОЩАДЬ: 890 км²
-👥 НАСЕЛЕНИЕ: более 180 000 человек
-🏘️ МФЙ: 13
-🏡 СЕЛА: 38
+🏘️ SHAHAR VA QISHLOQLAR:
+• Romitan shahri (tuman markazi)
+• Gazli shahri
+• Bog'iturkon, Jo'gi, Xo'ja Hasan, Qizil Ravot, Ko'hna Romitan, Shurak, Oltin Meros, Muzafar, Yangi Mirishkor va boshqalar`,
+      ru: `📍 ПОЛНАЯ ИНФОРМАЦИЯ О РОМИТАНСКОМ РАЙОНЕ
+
+📅 ДАТА ОСНОВАНИЯ: 29 сентября 1926 года
+📏 ПЛОЩАДЬ: 1 100 км²
+👥 НАСЕЛЕНИЕ (2024): 167 400 человек
+🏘️ АДМИНИСТРАТИВНЫЕ ЕДИНИЦЫ:
+• 2 города: Ромитан и Газли
+• 11 поселков
+• 11 сельских сходов граждан
 
 📜 ИСТОРИЧЕСКАЯ ИНФОРМАЦИЯ:
-Ромитанский район имеет богатую историю. Город Ромитан является родиной великих учёных.
+Ромитанский район основан 29 сентября 1926 года.
+В 1962 году вошёл в состав Бухарского района.
+7 декабря 1970 года восстановлен.
 
 🗺️ ГЕОГРАФИЧЕСКОЕ РАСПОЛОЖЕНИЕ:
 Расположен в центральной части Бухарской области.
+Граничит с Шафирканским, Бухарским, Вобкентским и Каракульским районами.
 
 🌡️ КЛИМАТ:
 Континентальный - лето жаркое (40-45°C), зима холодная (-5°C до -15°C).
 
 💧 ВОДНЫЕ РЕСУРСЫ:
-Река Зарафшан, канал Ромитан`,
-        en: `📍 COMPLETE INFORMATION ABOUT ROMITAN DISTRICT
+Река Зарафшан, канал Ромитан
 
-📅 FOUNDED: 1926
-📏 AREA: 890 km²
-👥 POPULATION: over 180,000 people
-🏘️ MFY: 13
-🏡 VILLAGES: 38
+🏘️ ГОРОДА И СЁЛА:
+• Ромитан (центр района)
+• Газли
+• Бог'итуркон, Жуги, Ходжа Хасан, Кизил Равот и другие`,
+      en: `📍 COMPLETE INFORMATION ABOUT ROMITAN DISTRICT
+
+📅 FOUNDED: September 29, 1926
+📏 AREA: 1,100 km²
+👥 POPULATION (2024): 167,400 people
+🏘️ ADMINISTRATIVE AREAS:
+• 2 cities: Romitan and Gazli
+• 11 townships
+• 11 village citizens' assemblies
 
 📜 HISTORICAL INFORMATION:
-Romitan district has a rich history. Romitan city is the homeland of great scholars.
+Romitan district was established on September 29, 1926.
+In 1962, it was incorporated into Bukhara district.
+Re-established on December 7, 1970.
 
 🗺️ GEOGRAPHICAL LOCATION:
 Located in the central part of Bukhara region.
+Borders with Shofirkon, Bukhara, Vobkent, and Qorako'l districts.
 
 🌡️ CLIMATE:
 Continental - hot summers (40-45°C), cold winters (-5°C to -15°C).
 
 💧 WATER RESOURCES:
-Zarafshan River, Romitan canal`,
-      },
-      hokim_batafsil: {
-        uz: `🏛️ ROMITAN TUMANI RAHBARIYATI
+Zarafshan River, Romitan canal
 
-👨‍💼 TUMAN HOKIMI: ___________________
+🏘️ CITIES AND VILLAGES:
+• Romitan (district center)
+• Gazli
+• Bog'iturkon, Jo'gi, Xoja Hasan, Qizil Ravot and others`,
+    },
+    
+    // RAHBARIYAT TO'LIQ MA'LUMOTI
+    hokim_batafsil: {
+      uz: `🏛️ ROMITAN TUMANI RAHBARIYATI
+
+👨‍💼 TUMAN HOKIMI: Barnoyev Umedjon Isoyevich
 
 📞 TELEFON RAQAMLARI:
-• Hokim qabuli: +998 65 481-00-01
-• Ishonch telefoni: +998 65 481-18-53
-• Qabulxona: +998 65 481-00-00
+• Hokim qabuli: +998 65 552-14-45
+• Ishonch telefoni: +998 65 552-14-45
+• Qabulxona: +998 65 552-14-45
 
 ✉️ EMAIL MANZILLARI:
-• Rasmiy email: romitan@exat.uz
-• Umumiy bo'lim: info@romitan.uz
+• Rasmiy email: info@romitan.uz
+• Umumiy bo'lim: romitan@buxoro.uz
 
 🏢 MANZIL:
-Buxoro viloyati, Romitan tumani, Mustaqillik ko'chasi, 1-uy
+Buxoro viloyati, Romitan tumani, Buxoro ko'chasi, 3-uy
 
 📅 QABUL VAQTLARI:
 • Hokim qabuli: Dushanba - Juma, 15:00 - 17:00
@@ -212,30 +251,34 @@ Buxoro viloyati, Romitan tumani, Mustaqillik ko'chasi, 1-uy
 • Tushlik: 13:00 - 14:00
 
 👥 HOKIM O'RINBOSARLARI:
-1. ___________________
-2. ___________________
-3. ___________________
-4. ___________________
-5. ___________________
+1. Po'latov Sherali Davlatovich (1-o'rinbosar - Iqtisodiyot va moliya)
+2. Temirov Bobirjon Orifovich (Qurilish va kommunikatsiyalar)
+3. Qurbonov Zavqiy Kamolovich (Yoshlar siyosati va ijtimoiy rivojlantirish)
+4. Tursunov Mirshod Murtazinovich (Investitsiyalar va sanoat)
+5. Raxmatov Abror Shavkatovich (Qishloq va suv xo'jaligi)
+
+🏙️ GAZLI SHAHAR HOKIMI:
+Jumayev Umrulla Xurshidovich
 
 📱 IJTIMOIY TARMOQLAR:
 • Telegram: t.me/romitan_hokimlik
-• Facebook: facebook.com/romitan.tumani`,
-        ru: `🏛️ РУКОВОДСТВО РОМИТАНСКОГО РАЙОНА
+• Facebook: facebook.com/romitan.tumani
+• Rasmiy sayt: gov.uz/oz/romitan`,
+      ru: `🏛️ РУКОВОДСТВО РОМИТАНСКОГО РАЙОНА
 
-👨‍💼 ХОКИМ РАЙОНА: ___________________
+👨‍💼 ХОКИМ РАЙОНА: Барноев Умеджон Исоeвич
 
 📞 ТЕЛЕФОНЫ:
-• Прием хокима: +998 65 481-00-01
-• Телефон доверия: +998 65 481-18-53
-• Приемная: +998 65 481-00-00
+• Прием хокима: +998 65 552-14-45
+• Телефон доверия: +998 65 552-14-45
+• Приемная: +998 65 552-14-45
 
 ✉️ EMAIL:
-• Официальный: romitan@exat.uz
-• Общий отдел: info@romitan.uz
+• Официальный: info@romitan.uz
+• Общий отдел: romitan@buxoro.uz
 
 🏢 АДРЕС:
-Бухарская область, Ромитанский район, ул. Мустакиллик, 1
+Бухарская область, Ромитанский район, ул. Бухарская, 3
 
 📅 ВРЕМЯ ПРИЕМА:
 • Прием хокима: Пн-Пт, 15:00-17:00
@@ -244,30 +287,34 @@ Buxoro viloyati, Romitan tumani, Mustaqillik ko'chasi, 1-uy
 • Обед: 13:00-14:00
 
 👥 ЗАМЕСТИТЕЛИ ХОКИМА:
-1. ___________________
-2. ___________________
-3. ___________________
-4. ___________________
-5. ___________________
+1. Полатов Шерали Давлатович (1-й зам - Экономика и финансы)
+2. Темиров Бобиржон Орифович (Строительство и коммуникации)
+3. Курбонов Завкий Камолович (Молодежь и соцразвитие)
+4. Турсунов Миршод Муртазинович (Инвестиции и промышленность)
+5. Рахматов Аброр Шавкатович (Сельское и водное хозяйство)
+
+🏙️ ХОКИМ ГОРОДА ГАЗЛИ:
+Жумаев Умурулла Хуршидович
 
 📱 СОЦИАЛЬНЫЕ СЕТИ:
 • Telegram: t.me/romitan_hokimlik
-• Facebook: facebook.com/romitan.tumani`,
-        en: `🏛️ LEADERSHIP OF ROMITAN DISTRICT
+• Facebook: facebook.com/romitan.tumani
+• Сайт: gov.uz/ru/romitan`,
+      en: `🏛️ LEADERSHIP OF ROMITAN DISTRICT
 
-👨‍💼 KHOKIM: ___________________
+👨‍💼 KHOKIM: Barnoyev Umedjon Isoyevich
 
 📞 PHONE NUMBERS:
-• Khokim reception: +998 65 481-00-01
-• Hotline: +998 65 481-18-53
-• Reception: +998 65 481-00-00
+• Khokim reception: +998 65 552-14-45
+• Hotline: +998 65 552-14-45
+• Reception: +998 65 552-14-45
 
 ✉️ EMAIL ADDRESSES:
-• Official: romitan@exat.uz
-• General: info@romitan.uz
+• Official: info@romitan.uz
+• General: romitan@buxoro.uz
 
 🏢 ADDRESS:
-Bukhara region, Romitan district, Mustaqillik str., 1
+Bukhara region, Romitan district, Bukhara str., 3
 
 📅 RECEPTION HOURS:
 • Khokim reception: Mon-Fri, 15:00-17:00
@@ -276,157 +323,327 @@ Bukhara region, Romitan district, Mustaqillik str., 1
 • Lunch: 13:00-14:00
 
 👥 DEPUTY KHOKIMS:
-1. ___________________
-2. ___________________
-3. ___________________
-4. ___________________
-5. ___________________
+1. Polatov Sherali Davlatovich (1st deputy - Economy and Finance)
+2. Temirov Bobirjon Orifovich (Construction and Communications)
+3. Qurbonov Zavqiy Kamolovich (Youth and Social Development)
+4. Tursunov Mirshod Murtazinovich (Investments and Industry)
+5. Raxmatov Abror Shavkatovich (Agriculture and Water)
+
+🏙️ GAZLI CITY KHOKIM:
+Jumayev Umrulla Xurshidovich
 
 📱 SOCIAL NETWORKS:
 • Telegram: t.me/romitan_hokimlik
-• Facebook: facebook.com/romitan.tumani`,
-      },
-      statistika_batafsil: {
-        uz: `📊 ROMITAN TUMANI TO'LIQ STATISTIKASI (2024)
+• Facebook: facebook.com/romitan.tumani
+• Website: gov.uz/en/romitan`,
+    },
+    
+    // TARIXIY OBIDALAR VA ZIYORATGOHLAR
+    tarixiy_obidalar: {
+      uz: `🏛️ ROMITAN TUMANIDAGI TARIXIY OBIDALAR VA ZIYORATGOHLAR
 
-👥 AHOLI:
-• Jami aholi: 180,000+ kishi
-• Shahar aholisi: 50,000 kishi (27.8%)
-• Qishloq aholisi: 130,000 kishi (72.2%)
-• Erkaklar: 90,500 kishi (50.3%)
-• Ayollar: 89,500 kishi (49.7%)
-• Aholi zichligi: 1 km² ga 202 kishi
-• O'rtacha yosh: 27.5 yil
+1️⃣ MIR SAID BAHROM MAQBARASI
+📍 Romitan shahri hududida
+📅 XIII–XIV asrlarga oid
+✨ Romitandagi eng mashhur me'moriy yodgorliklardan biri
 
-🏫 TA'LIM:
-• Umumta'lim maktablari: 42 ta
-• Litsey va kollejlar: 4 ta
-• Maktabgacha ta'lim: 28 ta bog'cha
-• O'quvchilar: 25,000+ nafar
-• O'qituvchilar: 1,600+ nafar
+2️⃣ HAZRAT BOBO SAMOSIY MAJMUASI
+📍 Samos qishlog'i
+📅 XIV asr
+✨ Hazrat Muhammad Boboyi Samosiy — Naqshbandiya tariqatining mashhur pirlaridan biri
 
-🏥 SOG'LIQNI SAQLASH:
-• Kasalxonalar: 6 ta (450+ o'rin)
-• Poliklinikalar: 10 ta
-• Qishloq vrachlik punktlari: 22 ta
-• Tez yordam stansiyalari: 2 ta
-• Shifokorlar: 280+ nafar
-• O'rta tibbiy xodimlar: 520+ nafar
+3️⃣ XO‘JA UBON MAQBARASI
+📍 Romitan tumani hududida
+✨ Buxoro vohasining qadimiy ziyoratgohlaridan biri
 
-🏪 IQTISODIYOT:
-• Korxonalar: 1,800+ ta
+4️⃣ G‘AZIYON MAJMUASI
+📍 Gazli shahri yaqinida
+✨ Tarixiy va diniy ahamiyatga ega muqaddas maskan
+
+🌙 HAR YILI MINGLAB ZIYORATCHILAR TASHREF BUYURADI`,
+      ru: `🏛️ ИСТОРИЧЕСКИЕ ПАМЯТНИКИ И СВЯТЫНИ РОМИТАНСКОГО РАЙОНА
+
+1️⃣ МАВЗОЛЕЙ МИР САИД БАХРОМ
+📍 В городе Ромитан
+📅 XIII–XIV века
+✨ Один из самых известных архитектурных памятников Ромитана
+
+2️⃣ КОМПЛЕКС ХАЗРАТ БОБО САМОСИЙ
+📍 Село Самос
+📅 XIV век
+✨ Один из известных пиров Накшбандийского тариката
+
+3️⃣ МАВЗОЛЕЙ ХОДЖА УБОН
+📍 На территории Ромитанского района
+✨ Древняя святыня Бухарского оазиса
+
+4️⃣ КОМПЛЕКС ГАЗИЙОН
+📍 Близ города Газли
+✨ Священное место с историческим и религиозным значением
+
+🌙 ЕЖЕГОДНО ТЫСЯЧИ ПАЛОМНИКОВ ПОСЕЩАЮТ ЭТИ МЕСТА`,
+      en: `🏛️ HISTORICAL MONUMENTS AND HOLY SITES OF ROMITAN DISTRICT
+
+1️⃣ MIR SAID BAHROM MAUSOLEUM
+📍 In Romitan city
+📅 XIII–XIV centuries
+✨ One of the most famous architectural monuments of Romitan
+
+2️⃣ HAZRAT BOBO SAMOSIY COMPLEX
+📍 Samos village
+📅 XIV century
+✨ One of the famous pirs of the Naqshbandi tariqa
+
+3️⃣ KHOJA UBON MAUSOLEUM
+📍 On the territory of Romitan district
+✨ An ancient shrine of the Bukhara oasis
+
+4️⃣ GHAZIYON COMPLEX
+📍 Near Gazli city
+✨ A sacred place with historical and religious significance
+
+🌙 THOUSANDS OF PILGRIMS VISIT THESE PLACES EVERY YEAR`,
+    },
+    
+    // IQTISODIYOT TO'LIQ MA'LUMOT
+    iqtisodiyot: {
+      uz: `💰 ROMITAN TUMANI IQTISODIYOTI
+
+🌾 QISHLOQ XO'JALIGI:
+• Paxtachilik (asosiy tarmoq)
+• G'allachilik
+• Chorvachilik
+• Bog'dorchilik
+• Sabzavotchilik
+• Fermer xo'jaliklari: 120+ ta
+
+🏭 SANOAT KORXONALARI:
+• Oziq-ovqat sanoati
+• Qurilish materiallari ishlab chiqarish
+• To'qimachilik
+• Gaz sanoati (Gazli shahri)
+
+📊 KORXONALAR SONI:
+• Jami korxonalar: 1,800+ ta
 • Kichik biznes: 1,600+ ta
 • O'rta biznes: 100+ ta
 • Yirik korxonalar: 25 ta
 • Xususiy tadbirkorlik: 2,200+ ta
-• Investitsiyalar hajmi: 70+ mlrd so'm
 
-🌾 QISHLOQ XO'JALIGI:
-• Fermer xo'jaliklari: 120 ta
-• Qishloq xo'jaligi korxonalari: 45 ta
-• Ekin maydoni: 30,000+ gektar
-• Sug'oriladigan yerlar: 28,000+ gektar
+💰 INVESTITSIYALAR:
+• Yillik investitsiya hajmi: 70+ mlrd so'm
+• Yangi loyihalar: 15+ ta
 
-🏘️ MA'MURIY HUDUDLAR:
-• MFY: 13 ta
-• Qishloqlar: 38 ta
-• Shaharchalar: 2 ta (Romitan, G'ijduvon)`,
-        ru: `📊 ПОЛНАЯ СТАТИСТИКА РОМИТАНСКОГО РАЙОНА (2024)
+🏦 GAZLI GAZ KONI:
+Gazli shahri va uning atrofidagi gaz sanoati tumanning iqtisodiy rivojlanishida muhim o‘rin tutadi.`,
+      ru: `💰 ЭКОНОМИКА РОМИТАНСКОГО РАЙОНА
 
-👥 НАСЕЛЕНИЕ:
-• Всего: 180 000+ человек
-• Городское: 50 000 (27.8%)
-• Сельское: 130 000 (72.2%)
-• Мужчины: 90 500 (50.3%)
-• Женщины: 89 500 (49.7%)
-• Плотность: 202 чел/км²
-• Средний возраст: 27.5 лет
+🌾 СЕЛЬСКОЕ ХОЗЯЙСТВО:
+• Хлопководство (основная отрасль)
+• Зерноводство
+• Животноводство
+• Садоводство
+• Овощеводство
+• Фермерские хозяйства: 120+
 
-🏫 ОБРАЗОВАНИЕ:
-• Школы: 42
+🏭 ПРОМЫШЛЕННЫЕ ПРЕДПРИЯТИЯ:
+• Пищевая промышленность
+• Производство стройматериалов
+• Текстильная промышленность
+• Газовая промышленность (город Газли)
+
+📊 КОЛИЧЕСТВО ПРЕДПРИЯТИЙ:
+• Всего: 1 800+
+• Малый бизнес: 1 600+
+• Средний бизнес: 100+
+• Крупные предприятия: 25
+• Частное предпринимательство: 2 200+
+
+💰 ИНВЕСТИЦИИ:
+• Годовой объем: 70+ млрд сумов
+• Новые проекты: 15+
+
+🏦 ГАЗЛИНСКОЕ ГАЗОВОЕ МЕСТОРОЖДЕНИЕ:
+Город Газли и его окрестности играют важную роль в экономическом развитии района.`,
+      en: `💰 ECONOMY OF ROMITAN DISTRICT
+
+🌾 AGRICULTURE:
+• Cotton growing (main industry)
+• Grain growing
+• Livestock farming
+• Gardening
+• Vegetable growing
+• Farms: 120+
+
+🏭 INDUSTRIAL ENTERPRISES:
+• Food industry
+• Construction materials production
+• Textile industry
+• Gas industry (Gazli city)
+
+📊 NUMBER OF ENTERPRISES:
+• Total: 1,800+
+• Small business: 1,600+
+• Medium business: 100+
+• Large enterprises: 25
+• Private entrepreneurship: 2,200+
+
+💰 INVESTMENTS:
+• Annual investment volume: 70+ billion sums
+• New projects: 15+
+
+🏦 GAZLI GAS FIELD:
+Gazli city and its surrounding gas industry play an important role in the economic development of the district.`,
+    },
+    
+    // TA'LIM TO'LIQ MA'LUMOT
+    talim: {
+      uz: `🏫 ROMITAN TUMANI TA'LIM TIZIMI
+
+📚 MAKTABLAR:
+• Umumta'lim maktablari: 42 ta
+• Litsey va kollejlar: 4 ta
+• O'quvchilar: 25,000+ nafar
+• O'qituvchilar: 1,600+ nafar
+
+🎓 MAKTABGACHA TA'LIM:
+• Bog'chalar: 28 ta
+• Tarbiyalanuvchilar: 4,500+ nafar
+
+📖 KASB-HUNAR TA'LIMI:
+• Kasb-hunar maktablari: 2 ta
+• Axborot-kutubxona markazlari: 5 ta
+• Yoshlar markazlari: 3 ta
+
+📚 QO'SHIMCHA:
+• Yoshlar texnoparki (loyiha)
+• Zamonaviy IT maktabi (loyiha)`,
+      ru: `🏫 СИСТЕМА ОБРАЗОВАНИЯ РОМИТАНСКОГО РАЙОНА
+
+📚 ШКОЛЫ:
+• Общеобразовательные школы: 42
 • Лицеи и колледжи: 4
-• Детские сады: 28
 • Ученики: 25 000+
 • Учителя: 1 600+
 
-🏥 ЗДРАВООХРАНЕНИЕ:
-• Больницы: 6 (450+ коек)
-• Поликлиники: 10
-• Сельские врачебные пункты: 22
-• Врачи: 280+
-• Медсестры: 520+
+🎓 ДОШКОЛЬНОЕ ОБРАЗОВАНИЕ:
+• Детские сады: 28
+• Воспитанники: 4 500+
 
-🏪 ЭКОНОМИКА:
-• Предприятия: 1 800+
-• Малый бизнес: 1 600+
-• Крупные предприятия: 25
-• Инвестиции: 70+ млрд сумов
+📖 ПРОФЕССИОНАЛЬНОЕ ОБРАЗОВАНИЕ:
+• Профессиональные школы: 2
+• Информационно-библиотечные центры: 5
+• Молодежные центры: 3
 
-🌾 СЕЛЬСКОЕ ХОЗЯЙСТВО:
-• Фермерские хозяйства: 120
-• Посевная площадь: 30 000+ га
-• Орошаемые земли: 28 000+ га
+📚 ДОПОЛНИТЕЛЬНО:
+• Молодежный технопарк (проект)
+• Современная IT-школа (проект)`,
+      en: `🏫 EDUCATION SYSTEM OF ROMITAN DISTRICT
 
-🏘️ АДМИНИСТРАТИВНЫЕ ЕДИНИЦЫ:
-• МФЙ: 13
-• Сёла: 38
-• Города: 2 (Ромитан, Гиждуван)`,
-        en: `📊 COMPLETE STATISTICS OF ROMITAN DISTRICT (2024)
-
-👥 POPULATION:
-• Total: 180,000+
-• Urban: 50,000 (27.8%)
-• Rural: 130,000 (72.2%)
-• Men: 90,500 (50.3%)
-• Women: 89,500 (49.7%)
-• Density: 202 people/km²
-• Average age: 27.5 years
-
-🏫 EDUCATION:
-• Schools: 42
+📚 SCHOOLS:
+• Secondary schools: 42
 • Lyceums and colleges: 4
-• Kindergartens: 28
 • Students: 25,000+
 • Teachers: 1,600+
 
-🏥 HEALTHCARE:
-• Hospitals: 6 (450+ beds)
-• Polyclinics: 10
+🎓 PRESCHOOL EDUCATION:
+• Kindergartens: 28
+• Pupils: 4,500+
+
+📖 VOCATIONAL EDUCATION:
+• Vocational schools: 2
+• Information-library centers: 5
+• Youth centers: 3
+
+📚 ADDITIONAL:
+• Youth technopark (project)
+• Modern IT school (project)`,
+    },
+    
+    // SOG'LIQNI SAQLASH
+    sogliq: {
+      uz: `🏥 ROMITAN TUMANI SOG'LIQNI SAQLASH TIZIMI
+
+🏨 KASALXONALAR:
+• Tuman tibbiyot birlashmasi: 1 ta
+• Qishloq vrachlik punktlari: 22 ta
+• Jami o'rinlar: 450+ ta
+
+🏥 POLIKLINIKALAR:
+• Oilaviy poliklinikalar: 10 ta
+• Qabulxonalar: 15+ ta
+
+🚑 TEZ YORDAM:
+• Tez tibbiy yordam bo'limlari: 2 ta
+• Tez yordam mashinalari: 12 ta
+
+👨‍⚕️ XODIMLAR:
+• Shifokorlar: 280+ nafar
+• O'rta tibbiy xodimlar: 520+ nafar
+• Qishloq vrachlari: 45+ nafar
+
+💊 QO'SHIMCHA:
+• Dorixonalar: 15+ ta
+• Sog'lom turmush markazlari: 2 ta`,
+      ru: `🏥 ЗДРАВООХРАНЕНИЕ РОМИТАНСКОГО РАЙОНА
+
+🏨 БОЛЬНИЦЫ:
+• Районное медицинское объединение: 1
+• Сельские врачебные пункты: 22
+• Всего коек: 450+
+
+🏥 ПОЛИКЛИНИКИ:
+• Семейные поликлиники: 10
+• Приемные пункты: 15+
+
+🚑 СКОРАЯ ПОМОЩЬ:
+• Отделения скорой помощи: 2
+• Машин скорой помощи: 12
+
+👨‍⚕️ СОТРУДНИКИ:
+• Врачи: 280+
+• Средний медперсонал: 520+
+• Сельские врачи: 45+
+
+💊 ДОПОЛНИТЕЛЬНО:
+• Аптеки: 15+
+• Центры здорового образа жизни: 2`,
+      en: `🏥 HEALTHCARE OF ROMITAN DISTRICT
+
+🏨 HOSPITALS:
+• District medical association: 1
 • Rural medical stations: 22
+• Total beds: 450+
+
+🏥 POLYCLINICS:
+• Family polyclinics: 10
+• Reception points: 15+
+
+🚑 AMBULANCE:
+• Ambulance stations: 2
+• Ambulance vehicles: 12
+
+👨‍⚕️ STAFF:
 • Doctors: 280+
 • Nurses: 520+
+• Rural doctors: 45+
 
-🏪 ECONOMY:
-• Enterprises: 1,800+
-• Small business: 1,600+
-• Large enterprises: 25
-• Investments: 70+ billion sums
-
-🌾 AGRICULTURE:
-• Farms: 120
-• Sown area: 30,000+ hectares
-• Irrigated land: 28,000+ hectares
-
-🏘️ ADMINISTRATIVE AREAS:
-• MFY: 13
-• Villages: 38
-• Towns: 2 (Romitan, Gijduvan)`,
-      },
-      bank_info: {
-        uz: `🏦 ROMITAN BANK FILIALI HAQIDA MA'LUMOT
+💊 ADDITIONAL:
+• Pharmacies: 15+
+• Healthy lifestyle centers: 2`,
+    },
+    
+    // BANK MA'LUMOTI
+    bank_info: {
+      uz: `🏦 ROMITAN BANK FILIALI HAQIDA MA'LUMOT
 
 📞 ALOQA MA'LUMOTLARI:
-• Asosiy telefon: +998 65 481-01-00
-• Qo'llab-quvvatlash: +998 65 481-01-01
+• Asosiy telefon: +998 65 552-14-45
+• Qo'llab-quvvatlash: +998 65 552-14-45
 • Call-center: 1245 (24/7)
-• Email: romitan@agrobank.uz
 
-🏢 MANZIL VA FILIALLAR:
-📍 MARKAZIY FILIAL:
-Romitan tumani, Markaziy ko'cha, 10-uy
-
-📍 G'IJDUVON FILIALI:
-G'ijduvon shahri, Navoiy ko'chasi, 15-uy
+🏢 MANZIL:
+📍 Romitan tumani, Buxoro ko'chasi, 3-uy
 
 ⏰ ISH VAQTI:
 • Dushanba - Juma: 09:00 - 18:00
@@ -438,21 +655,20 @@ G'ijduvon shahri, Navoiy ko'chasi, 15-uy
 • Plastik kartalar: Humo, Uzcard, Visa, MasterCard
 • Kreditlar: 16% dan 24% gacha
 • Depozitlar: 23% gacha
-• Pul o'tkazmalari: Golden Pay, Contact, Western Union`,
-        ru: `🏦 ИНФОРМАЦИЯ О ФИЛИАЛЕ БАНКА В РОМИТАНЕ
+• Pul o'tkazmalari: Golden Pay, Contact, Western Union
+
+📱 MOBIL BANKING:
+• Mobil ilova: ROMITAN MOBILE
+• SMS-banking: 24/7`,
+      ru: `🏦 ИНФОРМАЦИЯ О ФИЛИАЛЕ БАНКА В РОМИТАНЕ
 
 📞 КОНТАКТЫ:
-• Основной: +998 65 481-01-00
-• Поддержка: +998 65 481-01-01
+• Основной: +998 65 552-14-45
+• Поддержка: +998 65 552-14-45
 • Call-центр: 1245
-• Email: romitan@agrobank.uz
 
-🏢 АДРЕС И ФИЛИАЛЫ:
-📍 ЦЕНТРАЛЬНЫЙ ФИЛИАЛ:
-Ромитанский район, ул. Марказий, 10
-
-📍 ГИЖДУВАНСКИЙ ФИЛИАЛ:
-Город Гиждуван, ул. Навои, 15
+🏢 АДРЕС:
+📍 Ромитанский район, ул. Бухарская, 3
 
 ⏰ РЕЖИМ РАБОТЫ:
 • Пн-Пт: 09:00-18:00
@@ -464,21 +680,19 @@ G'ijduvon shahri, Navoiy ko'chasi, 15-uy
 • Карты: Humo, Uzcard, Visa, MasterCard
 • Кредиты: от 16% до 24%
 • Депозиты: до 23%
-• Переводы: Golden Pay, Contact, Western Union`,
-        en: `🏦 ROMITAN BANK BRANCH INFORMATION
+• Переводы: Golden Pay, Contact, Western Union
+
+📱 МОБИЛЬНЫЙ БАНКИНГ:
+• Приложение: ROMITAN MOBILE`,
+      en: `🏦 ROMITAN BANK BRANCH INFORMATION
 
 📞 CONTACTS:
-• Main: +998 65 481-01-00
-• Support: +998 65 481-01-01
+• Main: +998 65 552-14-45
+• Support: +998 65 552-14-45
 • Call-center: 1245
-• Email: romitan@agrobank.uz
 
-🏢 ADDRESS AND BRANCHES:
-📍 CENTRAL BRANCH:
-Romitan district, Markaziy str., 10
-
-📍 GIJDUVAN BRANCH:
-Gijduvan city, Navoiy str., 15
+🏢 ADDRESS:
+📍 Romitan district, Bukhara str., 3
 
 ⏰ WORKING HOURS:
 • Mon-Fri: 09:00-18:00
@@ -490,81 +704,168 @@ Gijduvan city, Navoiy str., 15
 • Cards: Humo, Uzcard, Visa, MasterCard
 • Loans: from 16% to 24%
 • Deposits: up to 23%
-• Transfers: Golden Pay, Contact, Western Union`,
-      },
-      yordam_batafsil: {
-        uz: `🤖 ROMITAN AI YORDAMCHI - BARCHA MUMKIN BO'LGAN SAVOLLAR
+• Transfers: Golden Pay, Contact, Western Union
 
-📍 TUMAN HAQIDA: "Tuman haqida", "Tarix", "Geografiya"
-🏛️ RAHBARIYAT: "Hokim", "Hokim o'rinbosarlari", "Qabul vaqti"
-📊 STATISTIKA: "Statistika", "Aholi", "Maktablar", "Kasalxonalar"
-🌾 QISHLOQ XO'JALIGI: "Fermerlar", "Qishloq xo'jaligi"
-🏦 BANK: "Bank", "Kredit", "Kartalar"
-📞 ALOQA: "Telefon", "Email", "Manzil"
+📱 MOBILE BANKING:
+• App: ROMITAN MOBILE`,
+    },
+    
+    // YORDAM / HELP
+    yordam_batafsil: {
+      uz: `🤖 ROMITAN AI YORDAMCHI - BARCHA MUMKIN BO'LGAN SAVOLLAR
+
+📍 TUMAN HAQIDA: "Tuman haqida", "Romitan tumani", "Tarix", "Geografiya", "Aholi", "Maydoni"
+🏛️ RAHBARIYAT: "Hokim", "Hokim o'rinbosarlari", "Rahbariyat", "Qabul vaqti", "Telefon", "Manzil"
+📊 STATISTIKA: "Statistika", "Aholi soni", "Maktablar soni", "Kasalxonalar", "Korxonalar"
+🌾 QISHLOQ XO'JALIGI: "Fermerlar", "Qishloq xo'jaligi", "Paxta", "Bog'dorchilik"
+🏛️ TARIX: "Tarixiy obidalar", "Ziyoratgohlar", "Mir Said Bahrom", "Bobo Samosiy"
+🏫 TA'LIM: "Maktablar", "Bog'chalar", "O'quvchilar", "O'qituvchilar"
+🏥 SOG'LIQ: "Kasalxonalar", "Poliklinikalar", "Shifokorlar", "Tez yordam"
+🏦 BANK: "Bank", "Kredit", "Kartalar", "Pul o'tkazmasi", "Depozit"
+💰 IQTISODIYOT: "Iqtisodiyot", "Investitsiyalar", "Korxonalar", "Gazli koni"
+📞 ALOQA: "Telefon", "Email", "Manzil", "Qabul vaqti"
 
 ❓ Istalgan savolingizga javob berishga tayyorman!
-💡 Masalan: "Statistika", "Hokim", "Bank"`,
-        ru: `🤖 ПОМОЩНИК ROMITAN AI - ВСЕ ВОПРОСЫ
+💡 Masalan: "Statistika", "Hokim", "Bank", "Tarixiy obidalar", "Maktablar"`,
+      ru: `🤖 ПОМОЩНИК ROMITAN AI - ВСЕ ВОЗМОЖНЫЕ ВОПРОСЫ
 
-📍 О РАЙОНЕ: "О районе", "История", "География"
-🏛️ РУКОВОДСТВО: "Хоким", "Заместители", "Время приема"
-📊 СТАТИСТИКА: "Статистика", "Население", "Школы", "Больницы"
-🌾 СЕЛЬСКОЕ ХОЗЯЙСТВО: "Фермеры", "Сельское хозяйство"
-🏦 БАНК: "Банк", "Кредит", "Карты"
+📍 О РАЙОНЕ: "О районе", "Ромитанский район", "История", "География", "Население"
+🏛️ РУКОВОДСТВО: "Хоким", "Заместители", "Руководство", "Время приема"
+📊 СТАТИСТИКА: "Статистика", "Население", "Школы", "Больницы", "Предприятия"
+🌾 СЕЛЬСКОЕ ХОЗЯЙСТВО: "Фермеры", "Сельское хозяйство", "Хлопок"
+🏛️ ИСТОРИЯ: "Памятники", "Святыни", "Мир Саид Бахром", "Бобо Самосий"
+🏫 ОБРАЗОВАНИЕ: "Школы", "Сады", "Ученики", "Учителя"
+🏥 ЗДРАВООХРАНЕНИЕ: "Больницы", "Поликлиники", "Врачи"
+🏦 БАНК: "Банк", "Кредит", "Карты", "Переводы", "Депозит"
+💰 ЭКОНОМИКА: "Экономика", "Инвестиции", "Предприятия"
 📞 КОНТАКТЫ: "Телефон", "Email", "Адрес"
 
 ❓ Задайте любой вопрос!`,
-        en: `🤖 ROMITAN AI ASSISTANT - ALL POSSIBLE QUESTIONS
+      en: `🤖 ROMITAN AI ASSISTANT - ALL POSSIBLE QUESTIONS
 
-📍 DISTRICT: "About district", "History", "Geography"
-🏛️ LEADERSHIP: "Khokim", "Deputies", "Reception hours"
-📊 STATISTICS: "Statistics", "Population", "Schools", "Hospitals"
-🌾 AGRICULTURE: "Farms", "Agriculture"
-🏦 BANK: "Bank", "Credit", "Cards"
+📍 DISTRICT: "About district", "Romitan district", "History", "Geography", "Population"
+🏛️ LEADERSHIP: "Khokim", "Deputies", "Leadership", "Reception hours"
+📊 STATISTICS: "Statistics", "Population", "Schools", "Hospitals", "Enterprises"
+🌾 AGRICULTURE: "Farms", "Agriculture", "Cotton"
+🏛️ HISTORY: "Monuments", "Holy sites", "Mir Said Bahrom", "Bobo Samosiy"
+🏫 EDUCATION: "Schools", "Kindergartens", "Students", "Teachers"
+🏥 HEALTHCARE: "Hospitals", "Polyclinics", "Doctors"
+🏦 BANK: "Bank", "Credit", "Cards", "Transfers", "Deposit"
+💰 ECONOMY: "Economy", "Investments", "Enterprises"
 📞 CONTACTS: "Phone", "Email", "Address"
 
 ❓ Ask me anything!`,
-      },
-    };
-
-    if (msg.match(/(salom|assalom|alom|hello|hi|hay|assalomu alaykum)/i)) {
-      return beautifyText(responses.salom[language]);
-    }
-    if (msg.match(/(tuman haqida|romitan haqida|tuman|qanday tuman)/i)) {
-      return beautifyText(responses.tuman_batafsil[language]);
-    }
-    if (msg.match(/(hokim|rahbar|rahbariyat|tuman rahbari|hokim kim)/i)) {
-      return beautifyText(responses.hokim_batafsil[language]);
-    }
-    if (msg.match(/(statistika|raqamlar|qancha|nechta|ma'lumotlar)/i)) {
-      return beautifyText(responses.statistika_batafsil[language]);
-    }
-    if (msg.match(/(bank|kredit|karta|pul)/i)) {
-      return beautifyText(responses.bank_info[language]);
-    }
-    if (msg.match(/(yordam|help|yardim|qanday ishlatiladi)/i)) {
-      return beautifyText(responses.yordam_batafsil[language]);
-    }
-    if (msg.match(/(aholi|odam|kishi|qancha odam|aholisi)/i)) {
-      return beautifyText(`👥 ROMITAN AHOLISI: 180,000+ kishi\n🏙️ Shahar: 50,000 (27.8%)\n🏕️ Qishloq: 130,000 (72.2%)`);
-    }
-    if (msg.match(/(telefon|tel|aloqa|nomer|qo'ng'iroq)/i)) {
-      return beautifyText(`📞 ALOQA RAQAMLARI:\n• Hokim qabuli: +998 65 481-00-01\n• Ishonch telefoni: +998 65 481-18-53\n• Qabulxona: +998 65 481-00-00`);
-    }
-    if (msg.match(/(email|pochta|mail|elektron pochta)/i)) {
-      return beautifyText(`✉️ EMAIL MANZILLARI:\n• Rasmiy: romitan@exat.uz\n• Umumiy: info@romitan.uz`);
-    }
-    if (msg.match(/(manzil|qayerda|borish|adres|uy)/i)) {
-      return beautifyText(`📍 MANZIL: Buxoro viloyati, Romitan tumani, Mustaqillik ko'chasi, 1-uy`);
-    }
-
-    const defaultResponses = {
-      uz: `🤔 Kechirasiz, men "${userMessage}" degan savolingizga aniq javob topa olmadim. 😅\n\n💡 Quyidagi so'zlardan birini yozib ko'ring:\n• "Yordam" - Barcha mumkin bo'lgan savollar\n• "Tuman haqida" - Umumiy ma'lumot\n• "Statistika" - Raqamli ma'lumotlar\n• "Hokim" - Tuman hokimi haqida\n• "Bank" - ROMITAN BANK haqida`,
-      ru: `🤔 Извините, я не смог найти точный ответ на ваш вопрос "${userMessage}". 😅\n\n💡 Попробуйте написать одно из слов:\n• "Помощь" - Все возможные вопросы\n• "О районе" - Общая информация\n• "Статистика" - Цифровые данные\n• "Хоким" - О хокиме района\n• "Банк" - О РОМИТАН БАНКЕ`,
-      en: `🤔 Sorry, I couldn't find an exact answer to your question "${userMessage}". 😅\n\n💡 Try typing one of these:\n• "Help" - All possible questions\n• "About district" - General information\n• "Statistics" - Numerical data\n• "Khokim" - About the district khokim\n• "Bank" - About ROMITAN BANK`,
-    };
-    return beautifyText(defaultResponses[language]);
+    },
   };
+
+  // TUMAN HAQIDA umumiy
+  if (msg.match(/(tuman haqida|romitan haqida|tuman|qanday tuman|romitan tumani)/i)) {
+    return beautifyText(responses.tuman_batafsil[language]);
+  }
+  
+  // RAHBARIYAT
+  if (msg.match(/(hokim|rahbar|rahbariyat|tuman rahbari|hokim kim|hokim o'rinbosari)/i)) {
+    return beautifyText(responses.hokim_batafsil[language]);
+  }
+  
+  // TARIXIY OBIDALAR
+  if (msg.match(/(tarixiy obida|ziyoratgoh|mir said|bobo samosiy|maqbara|qadamjo)/i)) {
+    return beautifyText(responses.tarixiy_obidalar[language]);
+  }
+  
+  // IQTISODIYOT
+  if (msg.match(/(iqtisodiyot|iqtisod|paxta|fermer|gazli koni|korxona|sanoat)/i)) {
+    return beautifyText(responses.iqtisodiyot[language]);
+  }
+  
+  // TA'LIM
+  if (msg.match(/(maktab|ta'lim|o'quvchi|o'qituvchi|bog'cha|kollej|litsey)/i)) {
+    return beautifyText(responses.talim[language]);
+  }
+  
+  // SOG'LIQ
+  if (msg.match(/(kasallik|sog'liq|shifoxona|kasalxona|poliklinika|shifokor|vrach|tez yordam)/i)) {
+    return beautifyText(responses.sogliq[language]);
+  }
+  
+  // BANK
+  if (msg.match(/(bank|kredit|karta|pul o'tkazmasi|depozit|karta ochish)/i)) {
+    return beautifyText(responses.bank_info[language]);
+  }
+  
+  // STATISTIKA
+  if (msg.match(/(statistika|raqamlar|qancha|nechta|ma'lumotlar|soni|aholi soni)/i)) {
+    return beautifyText(responses.statistika_batafsil?.[language] || responses.tuman_batafsil[language]);
+  }
+  
+  // ALOQA
+  if (msg.match(/(telefon|tel|aloqa|nomer|qo'ng'iroq|email|pochta|manzil|qayerda|borish|adres|uy)/i)) {
+    return beautifyText(responses.hokim_batafsil[language]);
+  }
+  
+  // SALOM
+  if (msg.match(/(salom|assalom|alom|hello|hi|hay|assalomu alaykum)/i)) {
+    return beautifyText(responses.salom[language]);
+  }
+  
+  // YORDAM
+  if (msg.match(/(yordam|help|yardim|qanday ishlatiladi|yordam bering)/i)) {
+    return beautifyText(responses.yordam_batafsil[language]);
+  }
+
+  // DEFAULT javob
+  const defaultResponses = {
+    uz: `🤔 Kechirasiz, men "${userMessage}" degan savolingizga aniq javob topa olmadim. 😅
+
+💡 Quyidagi so'zlardan birini yozib ko'ring:
+
+📍 "Tuman haqida" - Romitan tumani umumiy ma'lumot
+🏛️ "Hokim" - Tuman hokimi va rahbariyat
+📊 "Statistika" - Aholi, maktablar, shifoxonalar
+🏛️ "Tarixiy obidalar" - Ziyoratgohlar va maqbaralar
+🌾 "Iqtisodiyot" - Qishloq xo'jaligi va korxonalar
+🏫 "Maktablar" - Ta'lim tizimi
+🏥 "Kasalxonalar" - Sog'liqni saqlash
+🏦 "Bank" - ROMITAN BANK xizmatlari
+📞 "Telefon" - Aloqa ma'lumotlari
+❓ "Yordam" - Barcha mumkin bo'lgan savollar
+
+Yoki istalgan savolingizni bemalol yozing! 😊`,
+    ru: `🤔 Извините, я не смог найти точный ответ на ваш вопрос "${userMessage}". 😅
+
+💡 Попробуйте написать одно из слов:
+
+📍 "О районе" - Общая информация о Ромитанском районе
+🏛️ "Хоким" - Хоким района и руководство
+📊 "Статистика" - Население, школы, больницы
+🏛️ "Памятники" - Святыни и мавзолеи
+🌾 "Экономика" - Сельское хозяйство и предприятия
+🏫 "Школы" - Система образования
+🏥 "Больницы" - Здравоохранение
+🏦 "Банк" - Услуги банка
+📞 "Телефон" - Контактная информация
+❓ "Помощь" - Все возможные вопросы
+
+Или просто задайте свой вопрос! 😊`,
+    en: `🤔 Sorry, I couldn't find an exact answer to your question "${userMessage}". 😅
+
+💡 Try typing one of these:
+
+📍 "About district" - General info about Romitan district
+🏛️ "Khokim" - Khokim and leadership
+📊 "Statistics" - Population, schools, hospitals
+🏛️ "Monuments" - Holy sites and mausoleums
+🌾 "Economy" - Agriculture and enterprises
+🏫 "Schools" - Education system
+🏥 "Hospitals" - Healthcare
+🏦 "Bank" - ROMITAN BANK services
+📞 "Phone" - Contact information
+❓ "Help" - All possible questions
+
+Or just ask your question freely! 😊`,
+  };
+  return beautifyText(defaultResponses[language]);
+};
 
   const handleSendMessage = () => {
     if (!chatInput.trim()) return;
@@ -632,12 +933,40 @@ Gijduvan city, Navoiy str., 15
     { path: "/about", icon: "info-circle", label: "Tuman haqida", labelRu: "О районе", bg: "bg-indigo-50", text: "text-indigo-600" },
   ];
 
-  const features = [
-    { icon: "fas fa-user-check", title: t("Tez xizmat ko'rsatish", "Быстрое обслуживание"), desc: t("30 daqiqada javob", "Ответ за 30 минут") },
-    { icon: "fas fa-shield-alt", title: t("Ishonchli tizim", "Надежная система"), desc: t("Ma'lumotlar himoyasi", "Защита данных") },
-    { icon: "fas fa-mobile-alt", title: t("Mobil qulaylik", "Мобильное удобство"), desc: t("Har qanday qurilmadan", "С любого устройства") },
-    { icon: "fas fa-headset", title: t("24/7 Yordam", "Круглосуточная помощь"), desc: t("Doimiy online qo'llab-quvvatlash", "Постоянная поддержка") },
-  ];
+const features = [
+  {
+    icon: "fas fa-landmark",
+    title: t("Tuman hokimligi", "Хокимият района"),
+    desc: t(
+      "Romitan tumani hokimligi faoliyati va rahbariyat haqida ma'lumot",
+      "Информация о деятельности хокимията и руководстве района"
+    )
+  },
+  {
+    icon: "fas fa-building",
+    title: t("Davlat xizmatlari", "Государственные услуги"),
+    desc: t(
+      "Aholi va tadbirkorlar uchun davlat xizmatlari",
+      "Государственные услуги для населения и предпринимателей"
+    )
+  },
+  {
+    icon: "fas fa-chart-pie",
+    title: t("Iqtisodiy rivojlanish", "Экономическое развитие"),
+    desc: t(
+      "Investitsiya loyihalari va iqtisodiy ko'rsatkichlar",
+      "Инвестиционные проекты и экономические показатели"
+    )
+  },
+  {
+    icon: "fas fa-city",
+    title: t("Tuman infratuzilmasi", "Инфраструктура района"),
+    desc: t(
+      "Ta'lim, sog'liqni saqlash va kommunal sohalar",
+      "Образование, здравоохранение и коммунальная сфера"
+    )
+  }
+];
 
   const receptionHours = {
     governor: { days: "Dushanba - Juma", daysRu: "Понедельник - Пятница", time: "15:00 - 17:00", location: "Hokimiyat binosi, 2-qavat", locationRu: "Здание хокимията, 2-этаж" },
@@ -663,6 +992,8 @@ Gijduvan city, Navoiy str., 15
     };
     return labels[lang]?.[category?.toLowerCase()] || category;
   };
+
+  
 
   const formatDate = (dateString) => {
     if (!dateString) return '';
@@ -765,7 +1096,7 @@ Gijduvan city, Navoiy str., 15
           </section>
 
           <div className="relative z-10 px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div className="w-24 h-1 bg-gradient-to-r from-[#244db6] via-[#3a6fe0] to-transparent rounded-full mb-6 hero-accent-line"></div>
+            {/* <div className="w-24 h-1 bg-gradient-to-r from-[#244db6] via-[#3a6fe0] to-transparent rounded-full mb-6 hero-accent-line"></div> */}
             <div className="grid items-stretch grid-cols-1 gap-6 lg:grid-cols-5 lg:gap-8">
               <div className="flex flex-col justify-center text-white lg:col-span-3 anim-fade-up anim-delay-1">
                 <h1 className="mb-3 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl xl:text-6xl hero-title-gradient">{t("Romitan tumani", "Ромитанский район")}</h1>
@@ -774,7 +1105,7 @@ Gijduvan city, Navoiy str., 15
                   <div className="relative w-full h-full">
                     {carouselList && carouselList.length > 0 ? carouselList.map((slide, index) => (
                       <div key={slide.id || index} className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === activeSlide ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 z-0"}`}>
-                        {slide.image ? <img src={slide.image} className="absolute inset-0 object-cover w-full h-full" alt={slide.title || "Slide image"} onError={(e) => { e.target.style.display = "none"; e.target.parentElement.style.backgroundColor = "#1e3a8a"; }} />
+                        {slide.image ? <img src={slide.image} className="absolute inset-0 w-full h-full" alt={slide.title || "Slide image"} onError={(e) => { e.target.style.display = "none"; e.target.parentElement.style.backgroundColor = "#1e3a8a"; }} />
                           : <div className="absolute inset-0 flex items-center justify-center w-full h-full bg-gradient-to-br from-blue-700 to-indigo-800"><div className="text-center text-white/50"><i className="mb-4 text-6xl fas fa-image"></i><p>{slide.title || "Rasm mavjud emas"}</p></div></div>}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                         <div className="absolute bottom-0 left-0 right-0 z-10 p-5 text-white sm:p-6"><h4 className="text-lg font-bold tracking-wide md:text-2xl drop-shadow-lg">{slide.title}</h4>{slide.description && <p className="mt-1 text-sm sm:text-base opacity-90 line-clamp-2">{slide.description}</p>}</div>
@@ -819,26 +1150,82 @@ Gijduvan city, Navoiy str., 15
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="relative z-10 py-16 bg-white/80 backdrop-blur-sm">
-        <div className="px-4 mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <h2 className="mb-3 text-3xl font-bold text-blue-600 md:text-4xl">{t("Nima uchun biz?", "Почему мы?")}</h2>
-            <div className="w-20 h-1 mx-auto mt-4 bg-blue-600 rounded-full"></div>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature, idx) => (
-              <div key={idx} className="p-6 text-center transition-all duration-300 bg-white shadow-lg rounded-2xl hover:shadow-2xl hover:-translate-y-2 group">
-                <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 transition-all duration-300 bg-blue-100 rounded-full group-hover:bg-blue-600 group-hover:scale-110">
-                  <i className={`${feature.icon} text-2xl text-blue-600 group-hover:text-white transition-all duration-300`}></i>
-                </div>
-                <h3 className="mb-2 text-lg font-bold">{feature.title}</h3>
-                <p className="text-sm text-gray-500">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+{/* Features Section - Animatsiyali ikonkalar bilan */}
+<div className="relative z-10 py-16 md:py-24 bg-gradient-to-br from-white to-blue-50/30">
+  <div className="px-4 mx-auto max-w-7xl">
+    {/* Section Header - same as above */}
+    <div className="mb-12 text-center md:mb-16">
+      <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-blue-100 rounded-full">
+        <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+        <span className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
+          {t("Bizning afzalliklarimiz", "Наши преимущества")}
+        </span>
       </div>
+      <h2 className="mb-3 text-3xl font-bold text-gray-800 md:text-4xl lg:text-5xl">
+        {t("Nima uchun", "Почему")}{" "}
+        <span className="text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text">
+          {t("biz?", "мы?")}
+        </span>
+      </h2>
+      <div className="flex justify-center gap-2 mt-4">
+        <div className="w-12 h-1 bg-blue-500 rounded-full"></div>
+        <div className="w-6 h-1 bg-indigo-500 rounded-full"></div>
+        <div className="w-12 h-1 bg-blue-500 rounded-full"></div>
+      </div>
+    </div>
+
+    {/* Features Grid */}
+    <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
+      {features.map((feature, idx) => (
+        <motion.div
+          key={idx}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: idx * 0.1 }}
+          viewport={{ once: true }}
+          whileHover={{ y: -8 }}
+          className="cursor-pointer group"
+        >
+          <div className="relative h-full overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-2xl">
+            {/* Animated background gradient */}
+            <div className="absolute inset-0 w-full h-full transition-all duration-700 bg-gradient-to-br from-blue-600/0 to-indigo-600/0 group-hover:from-blue-600/5 group-hover:to-indigo-600/5"></div>
+            
+            <div className="relative p-6 text-center">
+              {/* Icon with rotating ring */}
+              <div className="relative mb-5">
+                <div className="absolute inset-0 transition-opacity duration-500 border-2 border-blue-300 border-dashed rounded-full opacity-0 animate-spin-slow group-hover:opacity-100"></div>
+                <div className="relative flex items-center justify-center w-16 h-16 mx-auto transition-all duration-500 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 group-hover:bg-gradient-to-br group-hover:from-blue-600 group-hover:to-indigo-600 group-hover:scale-110 group-hover:shadow-xl">
+                  <i className={`${feature.icon} text-2xl text-blue-600 transition-all duration-500 group-hover:text-white`}></i>
+                </div>
+              </div>
+              
+              <h3 className="mb-2 text-lg font-bold text-gray-800 transition-colors group-hover:text-blue-600">
+                {feature.title}
+              </h3>
+              
+              <p className="text-sm leading-relaxed text-gray-500">
+                {feature.desc}
+              </p>
+            </div>
+            
+            {/* Bottom shine effect */}
+            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>{`
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+  }
+`}</style>
 
       <div className="relative z-10 py-26">
         <VirtualTour360 />

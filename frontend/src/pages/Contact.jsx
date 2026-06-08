@@ -311,7 +311,7 @@ export default function Contact() {
         </div>
 
         {/* TASHKILOTLAR / TIZIMLAR with 3D cards */}
-        <div className="mt-20">
+        {/* <div className="mt-20">
           <div className="mb-12 text-center">
             <div className="inline-block px-4 py-1 mb-4 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full animate-fade-in-up">
               <i className="mr-2 text-xs fas fa-crown"></i>
@@ -338,16 +338,12 @@ export default function Contact() {
                 className="relative group animate-fade-in-up"
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
-                {/* 3D Card with glass morphism effect */}
                 <div className="relative overflow-hidden transition-all duration-500 border shadow-lg bg-white/90 backdrop-blur-sm rounded-2xl hover:shadow-2xl hover:-translate-y-3 border-blue-100/50">
-                  {/* Animated gradient border */}
                   <div className="absolute inset-0 transition-opacity duration-500 opacity-0 rounded-2xl group-hover:opacity-100">
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#003580] via-[#0066cc] to-[#00a1ff] blur-xl"></div>
                   </div>
 
-                  {/* Card content */}
                   <div className="relative z-10 p-6">
-                    {/* Header section with icon and badge */}
                     <div className="flex items-start justify-between mb-4">
                       <div
                         className={`relative w-16 h-16 bg-gradient-to-br from-[#003580] to-[#0066cc] rounded-2xl flex items-center justify-center shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 overflow-hidden`}
@@ -358,7 +354,6 @@ export default function Contact() {
                         <div className="absolute inset-0 transition-transform duration-700 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:translate-x-full"></div>
                       </div>
 
-                      {/* Popular badge */}
                       {idx === 0 && (
                         <div className="px-2 py-1 text-xs font-bold text-blue-600 bg-blue-100 rounded-full animate-pulse">
                           <i className="mr-1 text-yellow-500 fas fa-star"></i>
@@ -367,7 +362,6 @@ export default function Contact() {
                       )}
                     </div>
 
-                    {/* Title and description */}
                     <div className="mb-4">
                       <h3 className="text-2xl font-bold text-gray-800 group-hover:text-[#003580] transition-colors duration-300">
                         {org.name}
@@ -380,7 +374,7 @@ export default function Contact() {
                       </p>
                     </div>
 
-                    {/* Features tags */}
+                    
                     <div className="flex flex-wrap gap-2 mb-5">
                       <span className="px-2.5 py-1 bg-blue-50 text-blue-600 text-xs rounded-lg flex items-center gap-1.5 border border-blue-200">
                         <i className="fas fa-bolt text-[10px]"></i>
@@ -396,7 +390,6 @@ export default function Contact() {
                       </span>
                     </div>
 
-                    {/* Stats section - NEW */}
                     <div className="grid grid-cols-3 gap-2 py-3 mb-4 border-t border-b border-blue-100">
                       <div className="text-center">
                         <div className="text-lg font-bold text-[#003580]">
@@ -424,7 +417,6 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Progress bar - NEW */}
                     <div className="mb-4">
                       <div className="flex justify-between mb-1 text-xs text-gray-500">
                         <span>
@@ -440,7 +432,6 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Action buttons */}
                     <div className="flex gap-3 mt-4">
                       <Link
                         to={org.loginUrl}
@@ -453,7 +444,6 @@ export default function Contact() {
                         to={org.registerUrl}
                         className="group/btn flex-1 relative overflow-hidden px-4 py-2.5 text-sm font-medium text-center text-white transition-all duration-300 rounded-xl bg-gradient-to-r from-[#003580] to-[#0066cc] hover:scale-105 hover:shadow-lg"
                         onClick={() => {
-                          // Track registration click
                           console.log(`Register clicked for ${org.name}`);
                           toast.success(
                             `${org.name} tizimida ro'yxatdan o'tish`,
@@ -468,7 +458,6 @@ export default function Contact() {
                       </Link>
                     </div>
 
-                    {/* Quick action buttons - NEW */}
                     <div className="flex gap-2 pt-3 mt-3 border-t border-blue-100">
                       <button
                         onClick={() => {
@@ -494,12 +483,10 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Decorative corner accent */}
                   <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden">
                     <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-[#003580] to-[#0066cc] transform rotate-45 translate-x-8 -translate-y-8 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
                   </div>
 
-                  {/* Hover tooltip - NEW */}
                   <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#003580] text-white text-xs py-1 px-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
                     <i className="mr-1 fas fa-hand-pointer"></i>
                     {t("Karta ustiga bosing", "Нажмите на карту")}
@@ -509,7 +496,6 @@ export default function Contact() {
             ))}
           </div>
 
-          {/* View all button - NEW */}
           <div className="mt-12 text-center">
             <button
               onClick={() => {
@@ -525,7 +511,7 @@ export default function Contact() {
               <i className="transition-transform fas fa-arrow-right group-hover:translate-x-1"></i>
             </button>
           </div>
-        </div>
+        </div> */}
 
         <style jsx>{`
           @keyframes gradient {
